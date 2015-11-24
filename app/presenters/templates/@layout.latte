@@ -19,6 +19,16 @@
 <body>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
+
+	<ul class="navig">
+	    <li><a n:href="Homepage:">Články</a></li>
+	    {if $user->loggedIn}
+	        <li><a n:href="Sign:out">Odhlásit</a></li>
+	    {else}
+	        <li><a n:href="Sign:in">Přihlásit</a></li>
+	    {/if}
+	</ul>
+	
 	{include content}
 
 	{block scripts}
@@ -26,5 +36,6 @@
 	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
 	<script src="{$basePath}/js/main.js"></script>
 	{/block}
+
 </body>
 </html>

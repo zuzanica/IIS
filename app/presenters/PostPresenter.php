@@ -61,4 +61,51 @@ class PostPresenter extends BasePresenter
         $this->flashMessage('Děkuji za komentář', 'success');
         $this->redirect('this');
     }
+
+
+    protected function createComponentPostForm()
+    {
+        $form = new Form;
+        $form->addText('title', 'Titulek:')
+            ->setRequired();
+        $form->addTextArea('content', 'Obsah:')
+            ->setRequired();
+
+        $form->addSubmit('send', 'Uložit a publikovat');
+        $form->onSuccess[] = array($this, 'postFormSucceeded');
+
+        return $form;
+    }
+
+
+    public function postFormSucceeded($form, $values)
+    {
+    
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->error('Pro vytvoření, nebo editování příspěvku se musíte přihlásit.');
+        }
+        
+        $postId = $this->getParameter('postId');
+
+        if ($postId) {
+            $post = $this->database->table('posts')->get($postId);
+            $post->update($values);
+        } else {
+            $post = $this->database->table('posts')->insert($values);
+        }
+
+        $this->flashMessage('Příspěvek byl úspěšně publikován.', 'success');
+        $this->redirect('show', $post->id);
+    }
+
+    public function actionEdit($postId)
+    {
+        $post = $this->database->table('posts')->get($postId);
+        if (!$post) {
+            $this->error('Příspěvek nebyl nalezen');
+        }
+        $this['postForm']->setDefaults($post->toArray());
+    }
+
+
 }
