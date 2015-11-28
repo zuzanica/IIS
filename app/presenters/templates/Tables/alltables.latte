@@ -1,0 +1,79 @@
+{block content}	
+	<h2> stoly </h2>
+	<a n:href="showAll">Zobrazit všetky stoly</a>
+	<a n:href="showFree">Zobrazit volné stoly</a>
+
+	<div class="terrace">
+		<h3> Stoly na terase </h3>
+		<table border="1" style="width:50%">
+  		<tr>
+    		<th>stol</td>
+    		<th>pocet miest</td> 
+    		<th>stav</td>
+  		</tr>
+	    {foreach $terrace as $table}
+	    	<tr>
+		        <td>{$table->id}</td> 
+		        <td>{$table->seats}</td>
+		        <td>{$table->state}</<td>
+	        </tr>
+	    {/foreach}
+	    </table>
+	</div>
+
+	<div class="gadren">
+		<h3> Stoly na záhradke </h3>
+	    <table border="1" style="width:50%">
+  		<tr>
+    		<th>stol</td>
+    		<th>pocet miest</td> 
+    		<th>stav</td>
+  		</tr>
+	    {foreach $garden as $table}
+	        <tr>
+		        <td>{$table->id}</td> 
+		        <td>{$table->seats}</td>
+		        <td>{$table->state}</<td>
+	        </tr>
+	    {/foreach}
+	    </table>
+	</div>
+
+	<div class="room_A">
+		<h3> Stoly v prvej miestnosti</h3>
+		<table border="1" style="width:50%">
+  		<tr>
+    		<th>stol</td>
+    		<th>pocet miest</td> 
+    		<th>stav</td>
+  		</tr>
+	    {foreach $room_A as $table}
+	        <tr>
+		        <td>{$table->id}</td> 
+		        <td>{$table->seats}</td>
+		        <td>{$table->state}</<td>
+	        </tr>
+	    {/foreach}
+	    </table>
+	</div>
+
+	<div class="room_B">
+		<h3> Stoly v zadnej miestnosti </h3>
+	    <table border="1" style="width:50%">
+  		<tr>
+    		<th>stol</td>
+    		<th>pocet miest</td> 
+    		<th>stav</td>
+  		</tr>
+	    {foreach $room_B as $table}
+	        <tr>
+		        <td>{$table->id}</td> 
+		        <td>{$table->seats}</td>
+		        <td>{$table->state}</<td>
+	        </tr>
+	    {/foreach}
+	    </table>
+	</div>
+
+	
+{/block}

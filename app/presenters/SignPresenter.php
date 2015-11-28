@@ -11,7 +11,6 @@ class SignPresenter extends BasePresenter
 	/** @var SignFormFactory @inject */
 	public $factory;
 
-
 	/**
 	 * Sign-in form factory.
 	 * @return Nette\Application\UI\Form
@@ -19,7 +18,7 @@ class SignPresenter extends BasePresenter
 	protected function createComponentSignInForm()
 	{
 		$form = new Nette\Application\UI\Form;
-	    $form->addText('username', 'Uživatelské jméno:')
+	    $form->addText('username', 'Login:')
 	        ->setRequired('Prosím vyplňte své uživatelské jméno.');
 
 	    $form->addPassword('password', 'Heslo:')

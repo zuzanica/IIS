@@ -3,7 +3,7 @@
 # https://nette.org/security-warning
 #
 parameters:
-
+	
 
 php:
 	date.timezone: Europe/Prague
@@ -14,12 +14,33 @@ application:
 	mapping:
 		*: App\*Module\Presenters\*Presenter
 
-
 session:
 	expiration: 14 days
 
-
 services:
-	- App\Model\UserManager
 	- App\Forms\SignFormFactory
+	- App\Model\UserManager 
 	router: App\RouterFactory::createRouter
+	
+	authorizator:
+		class: Nette\Security\Permission
+		setup:
+			- addRole('guest')
+			- addRole('waiter', 'guest')
+			- addRole('manager', 'waiter')
+			- addRole('admin', 'manager')
+			- addResource('Default')
+			- addResource('Orders')
+			- addResource('Reservations')
+			- addResource('Tables')
+			- addResource('Staff')
+			- addResource('delete')
+			- addResource('Sales')
+			- allow('waiter', 'Orders') # šetky akcie resource Admin:Default
+			- allow('waiter', 'Reservations')
+			- allow('waiter', 'Tables')
+			- allow('manager', 'Staff')
+			- allow('admin') # šetky resources a ich akcie
+
+extensions:
+    formDateTime: IPub\FormDateTime\DI\FormDateTimeExtension

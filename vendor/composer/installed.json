@@ -1144,5 +1144,112 @@
             "testing",
             "unit"
         ]
+    },
+    {
+        "name": "ipub/form-datetime",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/iPublikuj/form-datetime.git",
+            "reference": "dcc04028d689dbc382d5dd1556e35ff543088446"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/iPublikuj/form-datetime/zipball/dcc04028d689dbc382d5dd1556e35ff543088446",
+            "reference": "dcc04028d689dbc382d5dd1556e35ff543088446",
+            "shasum": ""
+        },
+        "require": {
+            "latte/latte": "~2.2",
+            "nette/application": "~2.2",
+            "nette/di": "~2.2",
+            "nette/forms": "~2.2",
+            "nette/utils": "~2.2",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "janmarek/mockista": "@dev",
+            "nette/tester": "@dev",
+            "tracy/tracy": "~2.2"
+        },
+        "time": "2015-06-09 20:23:53",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "IPub\\FormDateTime\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "BSD-3-Clause",
+            "GPL-2.0",
+            "GPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "iPublikuj:cms",
+                "email": "info@ipublikuj.eu",
+                "homepage": "http://www.ipublikuj.eu/"
+            }
+        ],
+        "description": "Forms control for adding date, date&time and time fields for Nette Framework",
+        "homepage": "https://github.com/iPublikuj/form-datetime",
+        "keywords": [
+            "date",
+            "datepicker",
+            "form",
+            "framework",
+            "ipub",
+            "nette",
+            "time",
+            "timepicker",
+            "tools"
+        ]
+    },
+    {
+        "name": "radekdostal/nette-datetimepicker",
+        "version": "2.2.0",
+        "version_normalized": "2.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/radekdostal/Nette-DateTimePicker.git",
+            "reference": "6e3bb48e58aa4f42dd94400d459eaeae0bee9d37"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/radekdostal/Nette-DateTimePicker/zipball/6e3bb48e58aa4f42dd94400d459eaeae0bee9d37",
+            "reference": "6e3bb48e58aa4f42dd94400d459eaeae0bee9d37",
+            "shasum": ""
+        },
+        "require": {
+            "nette/forms": "^2.2.0",
+            "nette/utils": "^2.2.0",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "tracy/tracy": "^2.2.0"
+        },
+        "time": "2015-10-20 20:40:35",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "src/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "LGPL-2.1",
+            "LGPL-3.0"
+        ],
+        "authors": [
+            {
+                "name": "Radek Dostál",
+                "email": "radek.dostal@gmail.com"
+            }
+        ],
+        "description": "DatePicker and DateTimePicker input controls for Nette Framework"
     }
 ]

@@ -1,0 +1,37 @@
+{block content}
+	
+	<h2> Zamestnanci </h2>
+
+	<a n:href="Staff:new">Pridať zamestnanca</a>
+
+
+	<div class="staff">
+	    <table border="1" style="width:50%">
+  		<tr>
+    		<th>id</td>
+    		<th>login</td>
+    		<th>meno</td> 
+    		<th>priezvisko</td>
+    		<th>prac. pozícia</td>
+    		<th>smena</td>
+  		</tr>
+	    {foreach $staff as $person}
+	        <tr>
+		        <td>{$person->id}</td> 
+		        <td>{$person->login}</td>
+		        <td>{$person->name}</<td>
+		        <td>{$person->lastname}</<td>
+		        <td>{$person->position}</<td>
+		        <td>{$person->shift}</<td>
+		        {if $person->position != 'admin'}
+		        	<td><a n:href="delete $person->id">Odstrániť zamestnanca</a>
+					<a n:href="edit $person->id">Upravit zanestnanca</a>
+				{/if}
+		        </td>
+	        </tr>
+	        
+	    {/foreach}
+	    </table>
+	</div>
+
+{/block}

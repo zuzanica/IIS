@@ -6,6 +6,7 @@ use Nette;
 use App\Model;
 
 
+
 class HomepagePresenter extends BasePresenter
 {
 
@@ -19,11 +20,9 @@ class HomepagePresenter extends BasePresenter
 
     public function renderDefault()
 	{
-    $this->template->posts = $this->database->table('posts')
+    /*$this->template->posts = $this->database->table('posts')
         ->order('created_at DESC')
-        ->limit(5);
+        ->limit(5);*/
 	}
-
-	
 
 }

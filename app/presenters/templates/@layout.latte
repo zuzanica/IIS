@@ -19,15 +19,51 @@
 <body>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
+	<h1>Vitajte v restauracii u ...</h1>
 
 	<ul class="navig">
-	    <li><a n:href="Homepage:">Články</a></li>
-	    {if $user->loggedIn}
-	        <li><a n:href="Sign:out">Odhlásit</a></li>
-	    {else}
-	        <li><a n:href="Sign:in">Přihlásit</a></li>
-	    {/if}
+	    <li><a n:href="Homepage:">O nas</a></li>
+		<li><a n:href="DailyMenu:">Denne menu</a></li>
+		<li><a n:href="Homepage:">Jenálniček</a></li>
+		<li><a n:href="Contact:">Kontakt</a></li>
+		<li><a n:href="Reserve:createReservation">Rezervovať</a></li>
 	</ul>
+
+	<ul>
+	{if $user->loggedIn}
+		<div class="user">Prihlásený ako: {$user->getIdentity()->login} 
+		<p><a n:href="Sign:out">Odhlásit</a></p>
+
+		{if $user->isAllowed('Sales')}
+	       	<li><a n:href="Homepage:">Tržby</a></li>
+	    {/if}
+	    
+	    {if $user->isAllowed('Staff')}
+	    	<li><a n:href="Staff:">Zamestnanci</a></li> 
+	    {/if}
+
+	    {if $user->isAllowed('Tables')}
+	    	<li><a n:href="Tables:">Stoly</a></li> 
+	    {/if}	
+	    
+	    {if $user->isAllowed('Reservations')}	
+	    	<li><a n:href="Homepage:">Rezervacie</a></li>
+	    {/if}
+
+	   	{if $user->isAllowed('Orders')}	
+	    	<li><a n:href="Homepage:">Objednavky</a></li> 
+		{/if}
+	
+	</ul>
+	{else}
+		 	<div class="signIn">
+		 	<h2 n:block=title>Prihlásenie</h2>
+			{control signInForm}
+
+			</div>
+	{/if}
+
+	
 	
 	{include content}
 
@@ -35,7 +71,9 @@
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
 	<script src="{$basePath}/js/main.js"></script>
+	<script src="{$basePath}/libs/ipub.formDateTime.js"></script>
 	{/block}
+
 
 </body>
 </html>

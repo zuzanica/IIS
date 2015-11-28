@@ -1,0 +1,33 @@
+{block content}	
+	<h2> stoly </h2>
+	<a n:href="showAll">Zobrazit všetky stoly</a>
+	<a n:href="showFree">Zobrazit volné stoly</a>
+
+	<div class="terrace">
+		<h3> Stoly na terase </h3>
+	    {foreach $terrace as $t_table}
+	        <p>Stol : {$t_table->id}, pocet miest: {$t_table->seats}</p>
+	    {/foreach}
+	</div>
+
+	<div class="gadren">
+		<h3> Stoly na záhradke </h3>
+	    {foreach $garden as $table}
+	        <p>Stol : {$table->id}, pocet miest: {$table->seats}</p>
+	    {/foreach}
+	</div>
+
+	<div class="room_A">
+		<h3> Stoly v prvej miestnosti</h3>
+	    {foreach $room_A as $table}
+	        <p>Stol : {$table->id}, pocet miest: {$table->seats}</p>
+	    {/foreach}
+	</div>
+
+	<div class="room_B">
+		<h3> Stoly v zadnej miestnosti </h3>
+	    {foreach $room_B as $table}
+	        <p>Stol : {$table->id}, pocet miest: {$table->seats}</p>
+	    {/foreach}
+	</div>
+{/block}

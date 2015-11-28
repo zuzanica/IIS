@@ -9,7 +9,6 @@ namespace Nette\Forms;
 
 use Nette;
 
-
 /**
  * Creates, validates and renders HTML forms.
  *
@@ -18,6 +17,7 @@ use Nette;
  */
 class Form extends Container implements Nette\Utils\IHtmlString
 {
+
 	/** validator */
 	const EQUAL = ':equal',
 		IS_IN = self::EQUAL,
