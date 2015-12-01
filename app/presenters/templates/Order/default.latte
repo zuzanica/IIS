@@ -1,0 +1,30 @@
+{block content}
+	
+	<h2>Objednávky </h2>
+
+	<a n:href="Order:new">Nová objednávka</a>
+
+	<div class="orders">
+	    <table border="1" style="width:50%" >
+  		<tr>
+  			<th>ID</th>
+    		<th>Číslo stola</th>
+    		<th>Suma</th>
+    		<th>Stav</th>
+  		</tr>
+	    {foreach $orders as $order}
+	        <tr>
+		        <td align="center">{$order->id}</td> 
+		        <td>{$order->id_table}</td> 
+		        <td>{$order->amount}</td>
+		        <td>{$order->state}</td> 
+		        <td><a n:href="Order:show $order->id">Zobrazit</a></td>
+	        </tr>
+	    {/foreach}
+	    </table>
+	</div>	
+
+
+
+	
+{/block}

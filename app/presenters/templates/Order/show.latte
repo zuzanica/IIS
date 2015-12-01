@@ -1,0 +1,32 @@
+{block content}
+	
+	<h2>Objednávka č. : {$order[id]} , stôl: {$order['table']} </h2>	
+
+	<a n:href="Order:">Upraviť objednávku</a>
+	<div class="orders">
+	    <table border="1" style="width:50%" >
+  		<tr>
+  			<th>Produkt</th>
+    		<th>Množstvo</th>
+    		<th>Cena</th>
+  		</tr>
+	    {foreach $items as $item}
+	        <tr>
+		        <td>{$item->name}</td> 
+		        <td>{$item->amount}</td> 
+		        <td>{$item->prize}</td>
+	        </tr>
+	    {/foreach}
+	    <tr>
+		    <td></td> 
+		    <td></td> 
+		    <td>{$order['payment']}</td>
+	    </tr>
+	    </table>
+	</div>	
+
+	<h3><a n:href="Order:pay $order[id]">Zaplatiť {$order['payment']} € </a></h3>
+
+	<a n:href="Order:">← Spať na zoznam objednávok</a>
+	
+{/block}

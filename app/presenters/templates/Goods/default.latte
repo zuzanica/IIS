@@ -1,0 +1,55 @@
+{block content}
+	
+	<h2>Tovar </h2>
+	<h3>Zoznam jedál</h3>
+
+	<a n:href="Goods:food">Pridať jedlo</a>
+	<div class="food">
+	    <table border="1" style="width:50%">
+  		<tr>
+  			<th>ID</th>
+    		<th>Nazáv</th>
+    		<th>Typ</th>
+    		<th>Alergeny</th>
+    		<th>Váha[g]</th>
+    		<th>Cena</th>
+  		</tr>
+	    {foreach $foods as $food}
+	        <tr>
+		        <td>{$food->id}</td> 
+		        <td>{$food->name}</td> 
+		        <td>{$food->type}</td> 
+		        <td>{$food->alergens}</td> 
+		        <td>{$food->weigth}</td> 
+		        <td>{$food->prize}</td> 
+		        <td><a n:href="deletefood $food->id">Odstrániť tovar</a></td>
+	        </tr>
+	    {/foreach}
+	    </table>
+	</div>
+
+	<h3>Zoznam nápojov</h3>
+
+	<a n:href="Goods:drink">Pridať nápoj</a>
+	<div class="drink">
+	    <table border="1" style="width:50%">
+  		<tr>
+  			<th>ID</th>
+    		<th>Nazáv</th>
+    		<th>Alergeny</th>
+    		<th>Objem[ml]</th>
+    		<th>Cena</th>
+  		</tr>
+	    {foreach $drinks as $drink}
+	        <tr>
+		        <td>{$drink->id}</td> 
+		        <td>{$drink->name}</td>  
+		        <td>{$drink->alergens}</td> 
+		        <td>{$drink->volume}</td> 
+		        <td>{$drink->prize}</td>
+		        <td><a n:href="deletedrink $drink->id">Odstrániť tovar</a></td> 
+	        </tr>
+	    {/foreach}
+	    </table>
+	</div>
+{/block}
