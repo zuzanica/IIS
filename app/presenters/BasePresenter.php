@@ -49,28 +49,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	        $this->redirect('Homepage:');
 
 	    } catch (Nette\Security\AuthenticationException $e) {
-	        $form->addError('Nesprávné přihlašovací jméno nebo heslo.');
-	    }
-	}
-
-	public function actionOut()
-	{
-	    $this->getUser()->logout();
-	    $this->flashMessage('Odhlášení bylo úspěšné.');
-	    $this->redirect('Homepage:');
-	}
-
-	public function actionCreate()
-	{
-	    if (!$this->getUser()->isLoggedIn()) {
-	        $this->redirect('Sign:in');
-	    }
-	}
-
-	public function actionEdit($postId)
-	{
-	    if (!$this->getUser()->isLoggedIn()) {
-	        $this->redirect('Sign:in');
+	        $form->addError('Nesprávne prihlasovacie meno alebo heslo.');
 	    }
 	}
 

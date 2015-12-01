@@ -41,9 +41,11 @@ class StaffPresenter extends BasePresenter
         $this->redirect('Staff:');
     }
 
+    /**
+     * Formular for adding new employees to database 
+     */
     protected function createComponentStaffForm()
     {   
-
         $pos = array( 
         'manager' => 'vedúci smeny',
         'waiter' => 'čašník',
@@ -104,6 +106,10 @@ class StaffPresenter extends BasePresenter
 
     public function actionEdit($personalId)
     {
+        if (!$this->getUser()->isAllowed('editEmployee')) {
+            $this->redirect('Homepage:');
+        }
+
         $person = $this->database->table('staff')->get($personalId);
         if (!$person) {
             $this->error('Zamestnanec nieje v databáze');

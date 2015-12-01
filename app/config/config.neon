@@ -29,17 +29,23 @@ services:
 			- addRole('waiter', 'guest')
 			- addRole('manager', 'waiter')
 			- addRole('admin', 'manager')
+			- addResource('Chngpassw')
 			- addResource('Default')
 			- addResource('Orders')
 			- addResource('Reservations')
 			- addResource('Tables')
+			- addResource('Goods')
 			- addResource('Staff')
+			- addResource('editEmployee')
 			- addResource('delete')
 			- addResource('Sales')
+			- allow('waiter', 'Chngpassw')
 			- allow('waiter', 'Orders') # šetky akcie resource Admin:Default
 			- allow('waiter', 'Reservations')
 			- allow('waiter', 'Tables')
+			- allow('manager', 'Goods')
 			- allow('manager', 'Staff')
+			- allow('manager', editEmployee)
 			- allow('admin') # šetky resources a ich akcie
 
 extensions:

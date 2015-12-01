@@ -81,8 +81,6 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 	<ul class="navig">
 	    <li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
 ">O nas</a></li>
-		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("DailyMenu:"), ENT_COMPAT) ?>
-">Denne menu</a></li>
 		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
 ">Jenálniček</a></li>
 		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Contact:"), ENT_COMPAT) ?>
@@ -95,12 +93,20 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 <?php if ($user->loggedIn) { ?>
 		<div class="user">Prihlásený ako: <?php echo Latte\Runtime\Filters::escapeHtml($user->getIdentity()->login, ENT_NOQUOTES) ?>
 
-		<p><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sign:out"), ENT_COMPAT) ?>
+		<p><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sign:chngpassword"), ENT_COMPAT) ?>
+">Zmeniť heslo</a> <a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sign:out"), ENT_COMPAT) ?>
 ">Odhlásit</a></p>
+		</div>
+
 
 <?php if ($user->isAllowed('Sales')) { ?>
 	       	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
 ">Tržby</a></li>
+<?php } ?>
+
+<?php if ($user->isAllowed('Goods')) { ?>
+	       	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Goods:"), ENT_COMPAT) ?>
+">Tovar</a></li>
 <?php } ?>
 	    
 <?php if ($user->isAllowed('Staff')) { ?>
@@ -119,7 +125,7 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 <?php } ?>
 
 <?php if ($user->isAllowed('Orders')) { ?>
-	    	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
+	    	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Order:"), ENT_COMPAT) ?>
 ">Objednavky</a></li> 
 <?php } ?>
 	

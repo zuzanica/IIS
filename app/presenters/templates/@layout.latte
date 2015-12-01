@@ -23,7 +23,6 @@
 
 	<ul class="navig">
 	    <li><a n:href="Homepage:">O nas</a></li>
-		<li><a n:href="DailyMenu:">Denne menu</a></li>
 		<li><a n:href="Homepage:">Jenálniček</a></li>
 		<li><a n:href="Contact:">Kontakt</a></li>
 		<li><a n:href="Reserve:createReservation">Rezervovať</a></li>
@@ -32,10 +31,16 @@
 	<ul>
 	{if $user->loggedIn}
 		<div class="user">Prihlásený ako: {$user->getIdentity()->login} 
-		<p><a n:href="Sign:out">Odhlásit</a></p>
+		<p><a n:href="Sign:chngpassword">Zmeniť heslo</a> <a n:href="Sign:out">Odhlásit</a></p>
+		</div>
+
 
 		{if $user->isAllowed('Sales')}
 	       	<li><a n:href="Homepage:">Tržby</a></li>
+	    {/if}
+
+	    {if $user->isAllowed('Goods')}
+	       	<li><a n:href="Goods:">Tovar</a></li>
 	    {/if}
 	    
 	    {if $user->isAllowed('Staff')}
@@ -51,7 +56,7 @@
 	    {/if}
 
 	   	{if $user->isAllowed('Orders')}	
-	    	<li><a n:href="Homepage:">Objednavky</a></li> 
+	    	<li><a n:href="Order:">Objednavky</a></li> 
 		{/if}
 	
 	</ul>
