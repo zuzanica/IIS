@@ -50,3 +50,7 @@ services:
 
 extensions:
     formDateTime: IPub\FormDateTime\DI\FormDateTimeExtension
+
+latte:
+    macros:
+        - Nextras\Forms\Bridges\Latte\Macros\BS3InputMacros    

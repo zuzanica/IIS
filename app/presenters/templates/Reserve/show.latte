@@ -1,0 +1,33 @@
+{block content}
+	
+	<h2>Rezervácie </h2>
+
+	<div class="reservation">
+	    <table border="1" style="width:50%">
+  		<tr>
+  			<th>ID</th>
+  			<th>Dátum</th>
+  			<th>Čas</th>
+  			<th>Stôl</th>
+    		<th>Meno</th>
+    		<th>Priezvisko</th>
+    		<th>E-mail</th>
+    		<th>Tel. č.</th>
+  		</tr>
+	    {foreach $reservations as $reservation}
+	        <tr>
+		        <td>{$reservation->id}</td>
+		        <td>{$reservation->_date->format("d.m.Y")}</td> 
+		        <td>{$reservation->_time->format('%H:%M:%S')}</td> 
+		        <td>{$reservation->id_table}</td> 
+		        <td>{$reservation->name}</td> 
+		        <td>{$reservation->lastname}</td> 
+		        <td>{$reservation->email}</td> 
+		        <td>{$reservation->phone}</td> 
+		        <td><a n:href="delete $reservation->id">Odstrániť rezerváciu</a></td>
+	        </tr>
+	    {/foreach}
+	    </table>
+	</div>
+
+{/block}

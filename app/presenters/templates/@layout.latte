@@ -36,7 +36,7 @@
 
 
 		{if $user->isAllowed('Sales')}
-	       	<li><a n:href="Homepage:">Tržby</a></li>
+	       	<li><a n:href="Sales:">Tržby</a></li>
 	    {/if}
 
 	    {if $user->isAllowed('Goods')}
@@ -52,7 +52,7 @@
 	    {/if}	
 	    
 	    {if $user->isAllowed('Reservations')}	
-	    	<li><a n:href="Homepage:">Rezervacie</a></li>
+	    	<li><a n:href="Reserve:show">Rezervacie</a></li>
 	    {/if}
 
 	   	{if $user->isAllowed('Orders')}	
@@ -76,7 +76,6 @@
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
 	<script src="{$basePath}/js/main.js"></script>
-	<script src="{$basePath}/libs/ipub.formDateTime.js"></script>
 	{/block}
 
 

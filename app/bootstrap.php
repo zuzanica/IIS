@@ -1,6 +1,10 @@
 <?php
+use Nette\Forms\Container;
+use Nextras\Forms\Controls;
 
 require __DIR__ . '/../vendor/autoload.php';
+
+
 
 $configurator = new Nette\Configurator;
 
@@ -19,5 +23,8 @@ $configurator->addConfig(__DIR__ . '/config/config.local.neon');
 
 $container = $configurator->createContainer();
 
+Container::extensionMethod('addDateTimePicker', function (Container $container, $name, $label = NULL) {
+    return $container[$name] = new Controls\DateTimePicker($label);
+});
 
 return $container;

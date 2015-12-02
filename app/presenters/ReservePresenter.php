@@ -6,8 +6,6 @@ use Nette,
     Nette\Application\UI\Form;
 use App\Model;
 
-
-
 class ReservePresenter extends BasePresenter
 {
 
@@ -25,6 +23,17 @@ class ReservePresenter extends BasePresenter
         ->order('created_at DESC')
         ->limit(5);
 	}*/
+
+    public function renderShow($orderId)
+    {   
+
+        $context = $this->database;
+
+
+        $this->template->reservations = $context->query(
+            'SELECT r.id, r._date, r._time, r.id_table, c.name, c.lastname, c.email, c.phone  FROM client c, reservation r WHERE r.id_client = c.id');
+        //select all item in selcted order
+    }
 
     public function createComponentReservationForm(){
 
@@ -48,9 +57,10 @@ class ReservePresenter extends BasePresenter
             ->setType('email')
             ->setRequired();
 
-        $form->addDatePicker('date', 'Dátum:'); 
+        $form->addDateTimePicker('date_time', 'Dátum a čas:')
+            ->setRequired(); 
         
-        $form->addTimePicker('time', 'Čas:');
+       // $form->addTimePicker('time', 'Čas:');
 
 
         $form->addText('people', 'Počet osôb:')
@@ -115,6 +125,28 @@ class ReservePresenter extends BasePresenter
         return $tables;
 
     }
+
+
+    public function actionDelete($reservationID)
+    {   
+
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->redirect('Homepage:');
+        }
+
+        $reservation = $this->database->table('reservation')->get($reservationID);
+        if (!$reservation ) {
+            $this->error('Rezervácia už nieje v databáze');
+        }
+        else{
+            $reservation->delete();
+        }
+
+        //add check window
+        $this->flashMessage('Rezervácia bola odstránená', 'success');
+        $this->redirect('this');
+    }
+
 
 
 }

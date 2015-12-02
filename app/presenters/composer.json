@@ -1,0 +1,5 @@
+{
+    "require": {
+        "nextras/forms": "^1.6"
+    }
+}

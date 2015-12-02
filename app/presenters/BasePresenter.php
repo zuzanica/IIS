@@ -4,6 +4,7 @@ namespace App\Presenters;
 
 use Nette;
 use App\Model;
+use RadekDostal;
 
 
 
@@ -87,4 +88,5 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('You were logged off.');
         $this->redirect('this');
     }*/
+
 }
