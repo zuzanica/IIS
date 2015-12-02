@@ -1,0 +1,40 @@
+{define #content}
+
+{form reservationForm}
+     <table>
+            <tr><td>{label name /}</td><td> {input name}</td></tr>
+            <tr><td>{label lastname /}</td><td>  {input lastname}</td></tr>
+            <tr><td>{label phone /}</td><td>  {input phone}</td></tr>
+            <tr><td>{label email /}</td><td>  {input email}</td></tr>
+            <tr><td>{label date_time /}</td><td>  {input date_time}</td></tr>
+            <tr><td>{label people /}</td><td> {input people}</td></tr>
+            <tr><td>{label room /}</td><td>  {input room}</td></tr>
+            <tr><td>{snippet tableSnippet}
+                {label table /}{input table}
+            {/snippet}  </td></tr>
+            <tr><td>{input send}</td></tr>
+    </table>
+{/form}
+
+
+<script>
+{include #jsCallback, input => room, link => roomChange}
+</script>
+
+
+{/define}
+
+
+{define #jsCallback}
+
+$('#{$control["reservationForm"][$input]->htmlId}').on('change', function() {
+    $.nette.ajax({
+        type: 'GET',
+        url: '{link {$link}!}',
+        data: {
+            'value': $(this).val(),
+        }
+    });
+});
+
+{/define}

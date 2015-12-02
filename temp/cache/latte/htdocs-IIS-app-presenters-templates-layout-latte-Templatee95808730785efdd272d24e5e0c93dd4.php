@@ -30,7 +30,7 @@ if (!function_exists($_b->blocks['scripts'][] = '_lbeaf477db7c_scripts')) { func
 ?>	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
 	<script src="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/js/main.js"></script>
-	<script src="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/libs/ipub.formDateTime.js"></script>
+	<script src="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/js/nette.ajax.js"></script>
 <?php
 }}
 
@@ -85,8 +85,10 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 ">Jenálniček</a></li>
 		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Contact:"), ENT_COMPAT) ?>
 ">Kontakt</a></li>
-		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Reserve:createReservation"), ENT_COMPAT) ?>
+		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Reserve:"), ENT_COMPAT) ?>
 ">Rezervovať</a></li>
+		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Test:"), ENT_COMPAT) ?>
+">TEst</a></li>
 	</ul>
 
 	<ul>
@@ -100,7 +102,7 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 
 
 <?php if ($user->isAllowed('Sales')) { ?>
-	       	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
+	       	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sales:"), ENT_COMPAT) ?>
 ">Tržby</a></li>
 <?php } ?>
 
@@ -120,7 +122,7 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 <?php } ?>
 	    
 <?php if ($user->isAllowed('Reservations')) { ?>
-	    	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
+	    	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Reserve:show"), ENT_COMPAT) ?>
 ">Rezervacie</a></li>
 <?php } ?>
 
@@ -138,11 +140,9 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 <?php } ?>
 
 	
-	
-<?php Latte\Macros\BlockMacrosRuntime::callBlock($_b, 'content', $template->getParameters()) ?>
-
 <?php call_user_func(reset($_b->blocks['scripts']), $_b, get_defined_vars())  ?>
 
+<?php Latte\Macros\BlockMacrosRuntime::callBlock($_b, 'content', $template->getParameters()) ?>
 
 </body>
 </html>
