@@ -83,12 +83,10 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 ">O nas</a></li>
 		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
 ">Jenálniček</a></li>
-		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Contact:"), ENT_COMPAT) ?>
+		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
 ">Kontakt</a></li>
 		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Reserve:"), ENT_COMPAT) ?>
 ">Rezervovať</a></li>
-		<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Test:"), ENT_COMPAT) ?>
-">TEst</a></li>
 	</ul>
 
 	<ul>
@@ -99,7 +97,6 @@ call_user_func(reset($_b->blocks['head']), $_b, get_defined_vars())  ?>
 ">Zmeniť heslo</a> <a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sign:out"), ENT_COMPAT) ?>
 ">Odhlásit</a></p>
 		</div>
-
 
 <?php if ($user->isAllowed('Sales')) { ?>
 	       	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sales:"), ENT_COMPAT) ?>

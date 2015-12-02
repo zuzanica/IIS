@@ -12,7 +12,9 @@ list($_b, $_g, $_l) = $template->initialize('f420994551', 'html')
 // block content
 //
 if (!function_exists($_b->blocks['content'][] = '_lbcf2049ff6a_content')) { function _lbcf2049ff6a_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
-;echo Nette\Bridges\FormsLatte\Runtime::renderFormBegin($form = $_form = $_control["reservationForm"], array()) ?>
+?><h2>Rezervovať</h2>
+
+<?php echo Nette\Bridges\FormsLatte\Runtime::renderFormBegin($form = $_form = $_control["reservationForm"], array()) ?>
 
      <table>
             <tr><td><?php $_input = $_form["name"];if ($_label = $_input->getLabel()) echo Nextras\Forms\Bridges\Latte\Macros\BS3InputMacros::label($_label->addAttributes(array()), $_input, false)  ?>
@@ -94,7 +96,8 @@ if (empty($_l->extends) && !empty($_control->snippetMode)) {
 //
 ?>
 
-<?php if ($_l->extends) { ob_end_clean(); return $template->renderChildTemplate($_l->extends, get_defined_vars()); } ?>
+<?php if ($_l->extends) { ob_end_clean(); return $template->renderChildTemplate($_l->extends, get_defined_vars()); }
+call_user_func(reset($_b->blocks['content']), $_b, get_defined_vars())  ?>
 
 
 

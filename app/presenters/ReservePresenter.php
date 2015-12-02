@@ -16,90 +16,24 @@ class ReservePresenter extends BasePresenter
     {
         $this->database = $database;
     }
-/*******************************************************/
-
-
 
     public function renderDefault()
     {
-        // required to enable form access in snippets
-        //$this->template->_form = $this['selectForm'];
-        
+        // required to enable form access in snippets      
         $this->template->_form = $this['reservationForm'];
     }
 
-    /**
-     * Load values to second select
-     * @param int
-     */
-     public function handleFirstChange($value)
-    {
-        if ($value) {
-            $secondItems = array(
-                1 => 'First option ' . $value . ' - second option 1',
-                2 => 'First option ' . $value . ' - second option 2'
-            );
-
-            $this['selectForm']['second']->setPrompt('Select')
-                ->setItems($secondItems);
-
-        } else {
-            $this['selectForm']['second']->setPrompt('Select from first')
-                ->setItems(array());
-        }
-
-        $this->invalidateControl('secondSnippet');
-    }
-
-
-    /********************** form **********************/
-
-
-     protected function createComponentSelectForm()
-    {
-        $firstItems = array(
-            1 => 'First option 1',
-            2 => 'First option 2'
-        );
-
-        $form = new Form;
-        $form->addSelect('first', 'First select:', $firstItems)
-            ->setPrompt('Select');
-        $form->addSelect('second', 'Second select:')
-            ->setPrompt('Select from first');
-        $form->addSubmit('send', 'Submit');
-
-        $form->onSuccess[] = $this->processSelectForm;
-
-        return $form;
-    }
-
-    /**
-     * @param form
-     */
-     public function processSelectForm(Form $form)
-    {
-        // $form->getValues() ignores invalidated input's values
-        $values = $form->getHttpData();
-        unset($values['send']);
-        dump($values);
-
-        // ...
-    }
-
-
-
-/******************************************************/
     public function renderShow($orderId)
     {   
 
         $context = $this->database;
-
-
         $this->template->reservations = $context->query(
             'SELECT r.id, r._date, r._time, r.id_table, c.name, c.lastname, c.email, c.phone  FROM client c, reservation r WHERE r.id_client = c.id');
     }
 
+    /**
+    * Action called after form->select changed (working with JS in default.latte)
+    */
     public function handleRoomChange($value)
     {
         if ($value) {
@@ -107,7 +41,6 @@ class ReservePresenter extends BasePresenter
 
             $tablesInRoom = array();
             foreach ($tables as $table){
-                //echo 'honota:', $table; 
                 $tablesInRoom[$table->id] = $table->id . ', miest: '. $table->seats;
             }
 
@@ -132,7 +65,6 @@ class ReservePresenter extends BasePresenter
         'Miestnost_B' => 'Zadná miestnosť',
         );
 
-        
         $form = new Form;
 
         $form->addText('name', 'Meno:')->setRequired();
@@ -148,8 +80,6 @@ class ReservePresenter extends BasePresenter
         $form->addDateTimePicker('date_time', 'Dátum a čas:')
             ->setRequired(); 
         
-       // $form->addTimePicker('time', 'Čas:');
-
         $form->addText('people', 'Počet osôb:')
             ->setType('number') 
             ->setRequired()
@@ -157,16 +87,13 @@ class ReservePresenter extends BasePresenter
             ->addRule(Form::RANGE, 'Počet osôb musí byť vačsí ako jedna a menší ako 15. Pri vačsom počte ludí nás kontaktuje telefonicky alebo e-mailom', array(1, 15));
         
 
-        $form->addSelect('room', 'Miestnosť:', $rooms)->setPrompt('Zvolte miestnosť');
-            
-            //$tables = $this->getFreeTables($form->values->room);    
+        $form->addSelect('room', 'Miestnosť:', $rooms)->setPrompt('Zvolte miestnosť');   
 
         $form->addSelect('table', 'Stôl:')->setPrompt('Zvolte najskôr miestnosť');
     
         $form->addSubmit('send', 'Odoslať rezerváciu');
 
         $form->onSuccess[] = array($this, 'reservationFormSucceeded');
-        //$form->onSuccess[] = $this->processSelectForm;
         return $form;
     }
 
@@ -177,6 +104,7 @@ class ReservePresenter extends BasePresenter
         unset($values['send']);
         //dump($values);
          
+        //insert into table client 
         $client = $this->database->table('client')->insert(array(
             'name' => $values['name'],
             'lastname' => $values ['lastname'],  
@@ -184,9 +112,11 @@ class ReservePresenter extends BasePresenter
             'email' => $values['email'],
         ));
 
+        //create valit Date and Time format
         $d = strtotime($values['date_time']);
         $date = date('Y-m-d', $d);
         $time = date('H:i:s', $d);
+        //insert into table reservation
         $this->database->table('reservation')->insert(array(
             '_date' => $date,
             '_time' => $time,
@@ -196,7 +126,7 @@ class ReservePresenter extends BasePresenter
 
         $this->flashMessage('Ďakujeme za rezerváciu, bližšie informácie Vám boli zaslané na uvenú emailovú adresu.', 'success');
 
-        $this->redirect('this');
+        $this->redirect('Reserve:');
     }
 
     public function actionDelete($reservationID)

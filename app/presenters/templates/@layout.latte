@@ -24,9 +24,8 @@
 	<ul class="navig">
 	    <li><a n:href="Homepage:">O nas</a></li>
 		<li><a n:href="Homepage:">Jenálniček</a></li>
-		<li><a n:href="Contact:">Kontakt</a></li>
+		<li><a n:href="Homepage:">Kontakt</a></li>
 		<li><a n:href="Reserve:">Rezervovať</a></li>
-		<li><a n:href="Test:">TEst</a></li>
 	</ul>
 
 	<ul>
@@ -34,7 +33,6 @@
 		<div class="user">Prihlásený ako: {$user->getIdentity()->login} 
 		<p><a n:href="Sign:chngpassword">Zmeniť heslo</a> <a n:href="Sign:out">Odhlásit</a></p>
 		</div>
-
 
 		{if $user->isAllowed('Sales')}
 	       	<li><a n:href="Sales:">Tržby</a></li>
