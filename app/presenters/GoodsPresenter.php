@@ -10,7 +10,7 @@ class GoodsPresenter extends BasePresenter
 {
 	private $database;
 
-	 public function __construct(Nette\Database\Context $database)
+	public function __construct(Nette\Database\Context $database)
     {
         $this->database = $database;
     }
@@ -28,7 +28,7 @@ class GoodsPresenter extends BasePresenter
         $component = $this->database->table('goods')->get($goodsID);
         $food = $this->database->table('food')->where('id_goods', $goodsID);
         if (!$component or !$food) {
-            $this->error('Jedlo nieje v databáze');
+            $this->error('Jedlo nie je v databáze');
         }
         else{
             $this->database->table('food')->where('id_goods', $goodsID)->delete();    
