@@ -35,8 +35,11 @@
 	<!--  BOOSTSTRAP -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-	<link rel="stylesheet" href="{$basePath}/css/style.css">
+
+	<link rel="stylesheet" type="text/css" href="{$basePath}/css/style.css">
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	
+	<link rel="stylesheet" type="text/css" href="{$basePath}/css/bootstrap-datetimepicker.min.css">
 	<meta name="viewport" content="width=device-width">
 
 
@@ -51,6 +54,8 @@
 		<script src="{$basePath}/js/main.js"></script>
 		<script src="{$basePath}/js/nette.ajax.js"></script>
 
+		<script src="{$basePath}/js/bootstrap-datetimepicker.min.js"></script>
+
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	{/block}
@@ -60,7 +65,36 @@
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 	    	<ul nav navbar-nav>
-	    		{if $user->loggedIn}
+	    		<li class="navbar-text"><a n:href="Homepage:">O nas</a></li>
+				<li class="navbar-text"><a n:href="Homepage:menu">Jenálniček</a></li>
+				<li class="navbar-text"><a n:href="Reserve:">Rezervovať</a></li>
+				<li class="navbar-text"><a n:href="Homepage:contact" class="contact">Kontakt</a></li>
+
+				{if $user->loggedIn}						
+					<li class="dropdown navbar-text navbar-right">
+						<a href="#" class="dropdown-toggle glyphicon glyphicon-user" aria-hidden="true" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
+			       		<ul class="dropdown-menu">
+			        	    <li><a n:href="Sign:chngpassword">Zmeniť heslo</a></li>
+			    	    	<li><a n:href="Sign:out">Odhlásit</a></li>
+			         	</ul>
+			       </li>
+			       <li class="navbar-text navbar-right">Prihlásený ako: {$user->getIdentity()->login}</li> 
+				{else}
+					<li class="navbar-text navbar-right" data-toggle="modal" data-target="#myModal">
+						<a>Prihlásiť</a>
+					</li>	
+					{include modal}
+				{/if}
+
+			</ul>	
+	  	</div>
+	</nav>
+
+	<div id=wrapper>
+		<div class="page-header">
+			<h1>Vitajte v reštaurácii u ...</h1>
+			<ul>
+				{if $user->loggedIn}
 					{if $user->isAllowed('Sales')}
 				       	<li class="navbar-text"><a n:href="Sales:">Tržby</a></li>
 				    {/if}
@@ -85,45 +119,14 @@
 				    	<li class="navbar-text"><a n:href="Order:">Objednavky</a></li> 
 					{/if}
 				{/if}
-
-				{if $user->loggedIn}						
-					<li class="dropdown navbar-text navbar-right">
-						<a href="#" class="dropdown-toggle glyphicon glyphicon-user" aria-hidden="true" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
-			       		<ul class="dropdown-menu">
-			        	    <li><a n:href="Sign:chngpassword">Zmeniť heslo</a></li>
-			    	    	<li><a n:href="Sign:out">Odhlásit</a></li>
-			         	</ul>
-			       </li>
-			       <li class="navbar-text navbar-right">Prihlásený ako: {$user->getIdentity()->login}</li> 
-				{else}
-					<li class="navbar-text navbar-right" data-toggle="modal" data-target="#myModal">
-						<a>Prihlásiť</a>
-					</li>	
-					{include modal}
-				{/if}
-
-			</ul>	
-	  	</div>
-	</nav>
-
-	<div id=wrapper>
-		<div class="page-header">
-			<h1>Vitajte v restauracii u ...</h1>
-			<ul>
-			    <li class="navbar-text"><a n:href="Homepage:">O nas</a></li>
-				<li class="navbar-text"><a n:href="Homepage:">Jenálniček</a></li>
-				<li class="navbar-text"><a n:href="Homepage:">Kontakt</a></li>
-				<li class="navbar-text"><a n:href="Reserve:">Rezervovať</a></li>
 			</ul>
 		</div>	
 
-				
+		<div class="page-body">
+			{include content}	
+		</div>
 
-			
-		{include content}	
 	</div>	
-		
-
 	
 </body>
 </html>

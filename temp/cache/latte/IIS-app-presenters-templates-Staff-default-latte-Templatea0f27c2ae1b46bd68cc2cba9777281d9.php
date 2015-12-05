@@ -15,12 +15,14 @@ if (!function_exists($_b->blocks['content'][] = '_lb2b9fe19434_content')) { func
 ?>	
 	<h2> Zamestnanci </h2>
 
+	<a class="glyphicon glyphicon-plus" aria-hidden="true" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Staff:new"), ENT_COMPAT) ?>
+"></a>
 	<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Staff:new"), ENT_COMPAT) ?>
 ">Pridať zamestnanca</a>
 
 
 	<div class="staff">
-	    <table border="1" style="width:50%">
+	    <table class="table table-hover">
   		<tr>
     		<th>id</td>
     		<th>login</td>
@@ -39,10 +41,11 @@ if (!function_exists($_b->blocks['content'][] = '_lb2b9fe19434_content')) { func
 		        <td><?php echo Latte\Runtime\Filters::escapeHtml($person->shift, ENT_NOQUOTES) ?></<td>
 <?php if ($person->position != 'admin') { ?>
 					<td><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("edit", array($person->id)), ENT_COMPAT) ?>
-">Upravit zanestnanca</a>
-<?php if ($user->isAllowed('delete')) { ?>					<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("delete", array($person->id)), ENT_COMPAT) ?>
-">Odstrániť zamestnanca</a>
-<?php } } ?>
+">Upravit zanestnanca</a></td>
+					<td><?php if ($user->isAllowed('delete')) { ?><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("delete", array($person->id)), ENT_COMPAT) ?>
+">Odstrániť zamestnanca</a><?php } ?>
+</td>
+<?php } ?>
 		        </td>
 
 	        </tr>

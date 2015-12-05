@@ -19,7 +19,7 @@ if (!function_exists($_b->blocks['content'][] = '_lbec1ae6ee7e_content')) { func
 	<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Order:edit", array($order['id'])), ENT_COMPAT) ?>
 ">Upraviť objednávku</a>
 	<div class="orders">
-	    <table border="1" style="width:50%" >
+	    <table class="table table-hover" >
   		<tr>
   			<th>Produkt</th>
     		<th>Množstvo</th>
@@ -29,13 +29,13 @@ if (!function_exists($_b->blocks['content'][] = '_lbec1ae6ee7e_content')) { func
 	        <tr>
 		        <td><?php echo Latte\Runtime\Filters::escapeHtml($item->name, ENT_NOQUOTES) ?></td> 
 		        <td><?php echo Latte\Runtime\Filters::escapeHtml($item->amount, ENT_NOQUOTES) ?></td> 
-		        <td><?php echo Latte\Runtime\Filters::escapeHtml($item->prize, ENT_NOQUOTES) ?></td>
+		        <td><?php echo Latte\Runtime\Filters::escapeHtml($item->prize, ENT_NOQUOTES) ?> €</td>
 	        </tr>
 <?php $iterations++; } ?>
 	    <tr>
 		    <td></td> 
 		    <td></td> 
-		    <td><?php echo Latte\Runtime\Filters::escapeHtml($order['payment'], ENT_NOQUOTES) ?></td>
+		    <td><?php echo Latte\Runtime\Filters::escapeHtml($order['payment'], ENT_NOQUOTES) ?> €</td>
 	    </tr>
 	    </table>
 	</div>	

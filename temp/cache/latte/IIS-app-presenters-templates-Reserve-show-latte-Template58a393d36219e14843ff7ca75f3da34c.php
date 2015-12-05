@@ -16,7 +16,7 @@ if (!function_exists($_b->blocks['content'][] = '_lb4ef1ed152c_content')) { func
 	<h2>Rezervácie </h2>
 
 	<div class="reservation">
-	    <table border="1" style="width:50%">
+	    <table class="table table-hover">
   		<tr>
   			<th>ID</th>
   			<th>Dátum</th>

@@ -13,13 +13,13 @@ list($_b, $_g, $_l) = $template->initialize('cbb6a32c78', 'html')
 //
 if (!function_exists($_b->blocks['content'][] = '_lb29c464a949_content')) { function _lb29c464a949_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
 ?>	
-	<h2> stoly </h2>
-
-	<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("showAll"), ENT_COMPAT) ?>
-">Zobrazit všetky stoly</a>
-	<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("showFree"), ENT_COMPAT) ?>
-">Zobrazit volné stoly</a>
-
+	<h2>Stoly </h2>
+	<div class="table-select">
+		<p ><a class="left"  href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("showAll"), ENT_COMPAT) ?>
+">Zobrazit všetky stoly  </a></p>
+		<p ><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("showFree"), ENT_COMPAT) ?>
+">Zobrazit volné stoly</a></p>
+	<div>	
 <?php
 }}
 

@@ -1,28 +1,93 @@
 {block content}
 
+<div class="center-form">
 <h2>Rezervovať</h2>
 
-{form reservationForm}
-     <table>
-            <tr><td>{label name /}</td><td> {input name}</td></tr>
-            <tr><td>{label lastname /}</td><td>  {input lastname}</td></tr>
-            <tr><td>{label phone /}</td><td>  {input phone}</td></tr>
-            <tr><td>{label email /}</td><td>  {input email}</td></tr>
-            <tr><td>{label date_time /}</td><td>  {input date_time}</td></tr>
-            <tr><td>{label people /}</td><td> {input people}</td></tr>
-            <tr><td>{label room /}</td><td>  {input room}</td></tr>
-            <tr><td>{snippet tableSnippet}
-                {label table /}{input table}
-            {/snippet}  </td></tr>
-            <tr><td>{input send}</td></tr>
-    </table>
+
+{form reservationForm class=>"form-horizontal"}
+    
+
+        <div class="form-group">
+            {label name class => "control-label col-xs-4"/}
+            <div class="col-xs-8">
+                {input name placeholder=>"Meno"}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {label lastname class => "control-label col-xs-4"/}
+            <div class="col-xs-8">
+                {input lastname placeholder=>"Priezvisko"}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {label phone class => "control-label col-xs-4"/}
+            <div class="col-xs-8">
+                {input phone placeholder=>"Tel. číslo:"}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {label email class => "control-label col-xs-4"/}
+            <div class="col-xs-8">
+                {input email placeholder=>"Email"}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {label people class => "control-label col-xs-4"/}
+            <div class="col-xs-8">
+                {input people placeholder=>"0"}
+            </div>
+        </div>       
+
+        <div class="form-group">
+            {label room class => "control-label col-xs-4" /}
+            <div class="col-xs-8">
+                {input room}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {snippet tableSnippet}
+                {label table class => "control-label col-xs-4" /}
+                <div class="col-xs-8">
+                    {input table}
+                </div>
+            {/snippet}
+        </div>
+
+        <div class="form-group">
+            {label date class => "control-label col-xs-4"/}
+            <div class="col-xs-8">
+                {input date}
+            </div>
+        </div>
+
+        <div class="form-group">
+            {label time class => "control-label col-xs-4"/}
+            <div class="col-xs-8">
+                {input time}
+            </div>
+        </div>
+
+        <ul class="errors" n:if="$form->hasErrors()">
+            <li n:foreach="$form->errors as $error">{$error}</li>
+        </ul>
+
+        <div class="form-group">
+            <div class="col-xs-offset-4 col-xs-8">
+                {input send class=>"btn btn-primary"}
+            </div>
+        </div>
 {/form}
 
+</div>
 
 <script>
 {include #jsCallback, input => room, link => roomChange}
 </script>
-
 
 {/block}
 

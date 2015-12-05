@@ -12,8 +12,13 @@ list($_b, $_g, $_l) = $template->initialize('0039de355b', 'html')
 // block content
 //
 if (!function_exists($_b->blocks['content'][] = '_lbf10723af09_content')) { function _lbf10723af09_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
-?>	<p>Toto je len nova stranka tu budu aktuality o restauracii</p>
+?>	<div class=align-mid>
 
+		<div class="about">
+			<p>Toto je len nova stranka tu budu aktuality o restauracii</p>
+		</div>
+
+	</div>	
 <?php
 }}
 
@@ -37,8 +42,6 @@ if (empty($_l->extends) && !empty($_control->snippetMode)) {
 //
 // main template
 //
-?>
-
-<?php if ($_l->extends) { ob_end_clean(); return $template->renderChildTemplate($_l->extends, get_defined_vars()); }
+if ($_l->extends) { ob_end_clean(); return $template->renderChildTemplate($_l->extends, get_defined_vars()); }
 call_user_func(reset($_b->blocks['content']), $_b, get_defined_vars())  ?>	<?php
 }}

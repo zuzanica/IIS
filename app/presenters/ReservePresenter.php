@@ -45,18 +45,32 @@ class ReservePresenter extends BasePresenter
             }
 
             $this['reservationForm']['table']->setPrompt('Zvolte stôl')
-                ->setItems($tablesInRoom);
+                ->setItems($tablesInRoom)
+                ->setRequired("Vyberete stôl");      
 
         } else {
             $this['reservationForm']['table']->setPrompt('Zvolte miestnosť')
-                ->setItems(array());
+                ->setItems(array());  
         }
 
         $this->invalidateControl('tableSnippet');
     }
 
 
+    public function getFreeTimes(){
+        $resTables = $this->database->table('times');
+
+        $free_times = array();
+            foreach ($resTables as $resT){
+                $free_times[$resT->id] = $resT->free_time->format('%H:%I');
+            }
+        return $free_times;
+        
+    }
+
     public function createComponentReservationForm(){
+
+        $today = date('Y-m-d');     
 
         $rooms = array(
         'terasa' => 'Terasa', 
@@ -65,68 +79,99 @@ class ReservePresenter extends BasePresenter
         'Miestnost_B' => 'Zadná miestnosť',
         );
 
+        $free_times =$this->getFreeTimes();
+
         $form = new Form;
 
-        $form->addText('name', 'Meno:')->setRequired();
+        $form->addText('name', '* Meno:')->setRequired('Zadajte Vaše Meno.');
 
-        $form->addText('lastname', 'Priezvisko:')->setRequired();    
+        $form->addText('lastname', '* Priezvisko:')->setRequired('Zadajte Vaše Priezvisko.');    
 
-        $form->addText('phone', 'Tel. číslo:')->setRequired(); 
+        $form->addText('phone', 'Tel. číslo:'); 
 
-        $form->addText('email', 'Email:')
+        $form->addText('email', '* Email:')
             ->setType('email')
-            ->setRequired();
-
-        $form->addDateTimePicker('date_time', 'Dátum a čas:')
-            ->setRequired(); 
+            ->setRequired('Zadajte e-mail.');
+   
         
-        $form->addText('people', 'Počet osôb:')
+        $form->addText('people', '* Počet osôb:')
             ->setType('number') 
-            ->setRequired()
             ->addRule(Form::INTEGER, 'Počet osôb musí být číslo')
             ->addRule(Form::RANGE, 'Počet osôb musí byť vačsí ako jedna a menší ako 15. Pri vačsom počte ludí nás kontaktuje telefonicky alebo e-mailom', array(1, 15));
         
 
-        $form->addSelect('room', 'Miestnosť:', $rooms)->setPrompt('Zvolte miestnosť');   
+        $form->addSelect('room', '* Miestnosť:', $rooms)->setPrompt('Zvolte miestnosť')
+            ->setRequired('Vyberete miestnosť');   
 
-        $form->addSelect('table', 'Stôl:')->setPrompt('Zvolte najskôr miestnosť');
-    
+        $form->addSelect('table', '* Stôl:')->setPrompt('Zvolte najskôr miestnosť');
+
+        $form->addDatePicker('date', '* Dátum:')
+            ->setDefaultValue($today)
+            ->setRequired('Zvolte dátum.'); 
+
+        $form->addSelect('time', '* Čas:', $free_times)->setPrompt('Zvolte čas.')
+        ->setRequired('Zvolte čas.'); 
+
         $form->addSubmit('send', 'Odoslať rezerváciu');
 
-        $form->onSuccess[] = array($this, 'reservationFormSucceeded');
+        $form->onValidate[] = array($this, 'reservationFormSucceeded');
         return $form;
     }
 
 
     public function reservationFormSucceeded(Form $form){
-        
+
         $values = $form->getHttpData();
         unset($values['send']);
-        //dump($values);
-         
-        //insert into table client 
-        $client = $this->database->table('client')->insert(array(
-            'name' => $values['name'],
-            'lastname' => $values ['lastname'],  
-            'phone' => $values['phone'],  
-            'email' => $values['email'],
-        ));
+       // dump($values);
+        $reservation = $this->database->table('reservation');
+        $reserved = false; 
+        $t= $this->database->table('times')->get($values['time']);
 
-        //create valit Date and Time format
-        $d = strtotime($values['date_time']);
-        $date = date('Y-m-d', $d);
-        $time = date('H:i:s', $d);
-        //insert into table reservation
-        $this->database->table('reservation')->insert(array(
-            '_date' => $date,
-            '_time' => $time,
-            'id_table' => $values['table'],
-            'id_client' => $client->id
-        ));
+        foreach ($reservation as $r) {
+            //$this->flashMessage(print_r($values ['time']));
+            if($r->id_table == $values ['table'] 
+                && $r->_time->format('%H:%I:%S') == $t->free_time->format('%H:%I:%S') 
+                && $r->_date->format('Y-m-d') == $values ['date'])
+            {
+                $reserved = true;    
+            }  
+        }   
 
-        $this->flashMessage('Ďakujeme za rezerváciu, bližšie informácie Vám boli zaslané na uvenú emailovú adresu.', 'success');
+            if($reserved)
+            {
+                $this->flashMessage('CHYBAAA');
+                $form->addError('Lutujeme niekto si už rezervoval toto miesto zmente prosim čas alebo stôl.');
+            }        
+            else
+            {
+            //insert into table client 
+            $client = $this->database->table('client')->insert(array(
+                'name' => $values['name'],
+                'lastname' => $values ['lastname'],  
+                'phone' => $values['phone'],  
+                'email' => $values['email'],
+            ));
 
-        $this->redirect('Reserve:');
+            //create valit Date and Time format
+            //$d = strtotime($values['date_time']);
+            //$date = date('Y-m-d', $d);
+            //$time = date('H:i:s', $d);
+            //insert into table reservation
+            $t= $this->database->table('times')->get($values['time']);
+
+            $this->database->table('reservation')->insert(array(
+                '_date' => $values['date'],
+                '_time' => $t->free_time,
+                'id_table' => $values['table'],
+                'id_client' => $client->id
+            ));
+
+            $this->flashMessage('Ďakujeme za rezerváciu, bližšie informácie Vám boli zaslané na uvenú emailovú adresu.', 'success');
+
+            $this->redirect('Reserve:');
+
+            } 
     }
 
     public function actionDelete($reservationID)

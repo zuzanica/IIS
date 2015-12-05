@@ -49,6 +49,8 @@ if (!function_exists($_b->blocks['scripts'][] = '_lbeaf477db7c_scripts')) { func
 		<script src="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/js/main.js"></script>
 		<script src="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/js/nette.ajax.js"></script>
 
+		<script src="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/js/bootstrap-datetimepicker.min.js"></script>
+
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <?php
@@ -90,8 +92,11 @@ call_user_func(reset($_b->blocks['modal']), $_b, get_defined_vars())  ?>
 	<!--  BOOSTSTRAP -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-	<link rel="stylesheet" href="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/css/style.css">
+
+	<link rel="stylesheet" type="text/css" href="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/css/style.css">
 	<link rel="shortcut icon" href="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/favicon.ico">
+	
+	<link rel="stylesheet" type="text/css" href="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/css/bootstrap-datetimepicker.min.css">
 	<meta name="viewport" content="width=device-width">
 
 
@@ -110,6 +115,40 @@ call_user_func(reset($_b->blocks['modal']), $_b, get_defined_vars())  ?>
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
 	    	<ul nav navbar-nav>
+	    		<li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
+">O nas</a></li>
+				<li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:menu"), ENT_COMPAT) ?>
+">Jenálniček</a></li>
+				<li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Reserve:"), ENT_COMPAT) ?>
+">Rezervovať</a></li>
+				<li class="navbar-text"><a class="contact" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:contact"), ENT_COMPAT) ?>
+">Kontakt</a></li>
+
+<?php if ($user->loggedIn) { ?>
+					<li class="dropdown navbar-text navbar-right">
+						<a href="#" class="dropdown-toggle glyphicon glyphicon-user" aria-hidden="true" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
+			       		<ul class="dropdown-menu">
+			        	    <li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sign:chngpassword"), ENT_COMPAT) ?>
+">Zmeniť heslo</a></li>
+			    	    	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sign:out"), ENT_COMPAT) ?>
+">Odhlásit</a></li>
+			         	</ul>
+			       </li>
+			       <li class="navbar-text navbar-right">Prihlásený ako: <?php echo Latte\Runtime\Filters::escapeHtml($user->getIdentity()->login, ENT_NOQUOTES) ?></li> 
+<?php } else { ?>
+					<li class="navbar-text navbar-right" data-toggle="modal" data-target="#myModal">
+						<a>Prihlásiť</a>
+					</li>	
+<?php call_user_func(reset($_b->blocks['modal']), $_b, get_defined_vars()) ;} ?>
+
+			</ul>	
+	  	</div>
+	</nav>
+
+	<div id=wrapper>
+		<div class="page-header">
+			<h1>Vitajte v reštaurácii u ...</h1>
+			<ul>
 <?php if ($user->loggedIn) { if ($user->isAllowed('Sales')) { ?>
 				       	<li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sales:"), ENT_COMPAT) ?>
 ">Tržby</a></li>
@@ -139,50 +178,14 @@ call_user_func(reset($_b->blocks['modal']), $_b, get_defined_vars())  ?>
 				    	<li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Order:"), ENT_COMPAT) ?>
 ">Objednavky</a></li> 
 <?php } } ?>
-
-<?php if ($user->loggedIn) { ?>
-					<li class="dropdown navbar-text navbar-right">
-						<a href="#" class="dropdown-toggle glyphicon glyphicon-user" aria-hidden="true" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
-			       		<ul class="dropdown-menu">
-			        	    <li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sign:chngpassword"), ENT_COMPAT) ?>
-">Zmeniť heslo</a></li>
-			    	    	<li><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sign:out"), ENT_COMPAT) ?>
-">Odhlásit</a></li>
-			         	</ul>
-			       </li>
-			       <li class="navbar-text navbar-right">Prihlásený ako: <?php echo Latte\Runtime\Filters::escapeHtml($user->getIdentity()->login, ENT_NOQUOTES) ?></li> 
-<?php } else { ?>
-					<li class="navbar-text navbar-right" data-toggle="modal" data-target="#myModal">
-						<a>Prihlásiť</a>
-					</li>	
-<?php call_user_func(reset($_b->blocks['modal']), $_b, get_defined_vars()) ;} ?>
-
-			</ul>	
-	  	</div>
-	</nav>
-
-	<div id=wrapper>
-		<div class="page-header">
-			<h1>Vitajte v restauracii u ...</h1>
-			<ul>
-			    <li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
-">O nas</a></li>
-				<li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
-">Jenálniček</a></li>
-				<li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Homepage:"), ENT_COMPAT) ?>
-">Kontakt</a></li>
-				<li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Reserve:"), ENT_COMPAT) ?>
-">Rezervovať</a></li>
 			</ul>
 		</div>	
 
-				
-
-			
+		<div class="page-body">
 <?php Latte\Macros\BlockMacrosRuntime::callBlock($_b, 'content', $template->getParameters()) ?>
-	</div>	
-		
+		</div>
 
+	</div>	
 	
 </body>
 </html>

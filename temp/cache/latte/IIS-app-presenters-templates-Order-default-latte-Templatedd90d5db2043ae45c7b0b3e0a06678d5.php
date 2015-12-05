@@ -14,12 +14,13 @@ list($_b, $_g, $_l) = $template->initialize('f64e2999b0', 'html')
 if (!function_exists($_b->blocks['content'][] = '_lb91c56aa178_content')) { function _lb91c56aa178_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
 ?>	
 	<h2>Objednávky </h2>
-
+	<a class="glyphicon glyphicon-plus" aria-hidden="true" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Staff:new"), ENT_COMPAT) ?>
+"></a>
 	<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Order:new"), ENT_COMPAT) ?>
 ">Nová objednávka</a>
 
 	<div class="orders">
-	    <table border="1" style="width:50%" >
+	    <table class="table table-hover" >
   		<tr>
   			<th>ID</th>
     		<th>Číslo stola</th>
@@ -30,7 +31,7 @@ if (!function_exists($_b->blocks['content'][] = '_lb91c56aa178_content')) { func
 	        <tr>
 		        <td align="center"><?php echo Latte\Runtime\Filters::escapeHtml($order->id, ENT_NOQUOTES) ?></td> 
 		        <td><?php echo Latte\Runtime\Filters::escapeHtml($order->id_table, ENT_NOQUOTES) ?></td> 
-		        <td><?php echo Latte\Runtime\Filters::escapeHtml($order->amount, ENT_NOQUOTES) ?></td>
+		        <td><?php echo Latte\Runtime\Filters::escapeHtml($order->amount, ENT_NOQUOTES) ?> €</td>
 		        <td><?php echo Latte\Runtime\Filters::escapeHtml($order->state, ENT_NOQUOTES) ?></td> 
 		        <td><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Order:show", array($order->id)), ENT_COMPAT) ?>
 ">Zobrazit</a></td>

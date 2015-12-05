@@ -1,28 +1,30 @@
 {block content}
 	
 	<h2>Tržby </h2>
-	{control monthForm}
+	<div class="right">
+	{control monthForm }
+	</div>
 
 	<div class="payment">
-	    <table border="1" style="width:50%" >
+	    <table class="table table-hover" >
   		<tr>
   			<th>ID</th>
     		<th>Dátum/čas</th>
-    		<th>Suma</th>
+    		<th>Suma </th>
     		<th>Stav</th>
   		</tr>
 	    {foreach $payments as $payment}
 	        <tr>
 		        <td align="center">{$payment->id}</td> 
 		        <td>{$payment->date_time}</td> 
-		        <td>{$payment->amount}</td>
+		        <td>{$payment->amount} €</td>
 		        <td>{$payment->state}</td>
 	        </tr>
 	    {/foreach}
 	    </table>
 	</div>	
 
-	<p>Spolu: {$sum} €</p>
+	<p class=sum >Spolu: {$sum} €</p>
 
 	
 {/block}

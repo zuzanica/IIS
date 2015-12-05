@@ -16,10 +16,13 @@ if (!function_exists($_b->blocks['content'][] = '_lb3b25c9e1b8_content')) { func
 	<h2>Tovar </h2>
 	<h3>Zoznam jedál</h3>
 
-	<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Goods:food"), ENT_COMPAT) ?>
+	<a class="glyphicon glyphicon-plus" aria-hidden="true" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Goods:food"), ENT_COMPAT) ?>
+"></a>
+	<a  href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Goods:food"), ENT_COMPAT) ?>
 ">Pridať jedlo</a>
+	
 	<div class="food">
-	    <table border="1" style="width:50%">
+	    <table class="table table-hover">
   		<tr>
   			<th>ID</th>
     		<th>Nazáv</th>
@@ -44,11 +47,13 @@ if (!function_exists($_b->blocks['content'][] = '_lb3b25c9e1b8_content')) { func
 	</div>
 
 	<h3>Zoznam nápojov</h3>
-
+	<a class="glyphicon glyphicon-plus" aria-hidden="true" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Goods:drink"), ENT_COMPAT) ?>
+"></a>
 	<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Goods:drink"), ENT_COMPAT) ?>
 ">Pridať nápoj</a>
+	
 	<div class="drink">
-	    <table border="1" style="width:50%">
+	    <table class="table table-hover">
   		<tr>
   			<th>ID</th>
     		<th>Nazáv</th>

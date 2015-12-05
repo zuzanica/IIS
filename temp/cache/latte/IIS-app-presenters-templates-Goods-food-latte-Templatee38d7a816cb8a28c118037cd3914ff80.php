@@ -12,14 +12,14 @@ list($_b, $_g, $_l) = $template->initialize('dfb00fb76e', 'html')
 // block content
 //
 if (!function_exists($_b->blocks['content'][] = '_lbbc1cd346b8_content')) { function _lbbc1cd346b8_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
-?>	
-	<h2> Pridať zamestnanca </h2>
+?>	<div class="center-form">
+		<h2> Pridať tovar </h2>
 
 <?php $_l->tmp = $_control->getComponent("foodForm"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
-	
+	</div>	
+
 	<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Goods:"), ENT_COMPAT) ?>
 ">← Spať na zoznam tovaru</a>
-
 <?php
 }}
 

@@ -55,24 +55,69 @@ ul li {
 	display: inline;
 }
 
+h2 {
+	text-align: center;
+	padding: 10px;
+}
+
 #wrapper{
 	width: 1000px;
 	margin: auto;
 }
 
-#header{
-	width: 1000px;
-	margin: auto;
+.page-body{
+	padding-bottom: 9px;
+    margin: 60px 0 20px;
+    border-bottom: 1px solid #eee;
 }
 
-.left{
-	width: 700px;
-	height: 200px;
-	float:left;
+.align-mid{
+	text-align: center;
+}
+
+.center-form{
+	margin: auto;
+	width: 400px;
 }
 
 .right{
-	width: 300px;
-	height: 200px;
+
 	float:right;
 }
+
+.sum{
+	font-style: italic;
+	font-size: 20pt;
+	color: #3484D2;
+}
+
+.table-select{
+	height: 50px;
+
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+tr {
+	margin: 15px !important;
+}
+
+.about{
+	min-height: 500px;
+}
+
+.menu{
+	min-height: 500px;
+}
+
+.contact{
+	min-height: 500px;
+}
+
+.left{
+
+	float:left;
+}
+

@@ -14,28 +14,30 @@ list($_b, $_g, $_l) = $template->initialize('42d7dcd231', 'html')
 if (!function_exists($_b->blocks['content'][] = '_lb57991bc9af_content')) { function _lb57991bc9af_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
 ?>	
 	<h2>Tržby </h2>
+	<div class="right">
 <?php $_l->tmp = $_control->getComponent("monthForm"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
+	</div>
 
 	<div class="payment">
-	    <table border="1" style="width:50%" >
+	    <table class="table table-hover" >
   		<tr>
   			<th>ID</th>
     		<th>Dátum/čas</th>
-    		<th>Suma</th>
+    		<th>Suma </th>
     		<th>Stav</th>
   		</tr>
 <?php $iterations = 0; foreach ($payments as $payment) { ?>
 	        <tr>
 		        <td align="center"><?php echo Latte\Runtime\Filters::escapeHtml($payment->id, ENT_NOQUOTES) ?></td> 
 		        <td><?php echo Latte\Runtime\Filters::escapeHtml($payment->date_time, ENT_NOQUOTES) ?></td> 
-		        <td><?php echo Latte\Runtime\Filters::escapeHtml($payment->amount, ENT_NOQUOTES) ?></td>
+		        <td><?php echo Latte\Runtime\Filters::escapeHtml($payment->amount, ENT_NOQUOTES) ?> €</td>
 		        <td><?php echo Latte\Runtime\Filters::escapeHtml($payment->state, ENT_NOQUOTES) ?></td>
 	        </tr>
 <?php $iterations++; } ?>
 	    </table>
 	</div>	
 
-	<p>Spolu: <?php echo Latte\Runtime\Filters::escapeHtml($sum, ENT_NOQUOTES) ?> €</p>
+	<p class=sum >Spolu: <?php echo Latte\Runtime\Filters::escapeHtml($sum, ENT_NOQUOTES) ?> €</p>
 
 	
 <?php

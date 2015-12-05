@@ -26,5 +26,8 @@ $container = $configurator->createContainer();
 Container::extensionMethod('addDateTimePicker', function (Container $container, $name, $label = NULL) {
     return $container[$name] = new Controls\DateTimePicker($label);
 });
+Container::extensionMethod('addDatePicker', function (Container $container, $name, $label = NULL) {
+    return $container[$name] = new Controls\DatePicker($label);
+});
 
 return $container;

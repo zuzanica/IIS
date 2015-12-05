@@ -4,7 +4,7 @@
 
 	<a n:href="Order:edit $order[id]">Upraviť objednávku</a>
 	<div class="orders">
-	    <table border="1" style="width:50%" >
+	    <table class="table table-hover" >
   		<tr>
   			<th>Produkt</th>
     		<th>Množstvo</th>
@@ -14,13 +14,13 @@
 	        <tr>
 		        <td>{$item->name}</td> 
 		        <td>{$item->amount}</td> 
-		        <td>{$item->prize}</td>
+		        <td>{$item->prize} €</td>
 	        </tr>
 	    {/foreach}
 	    <tr>
 		    <td></td> 
 		    <td></td> 
-		    <td>{$order['payment']}</td>
+		    <td>{$order['payment']} €</td>
 	    </tr>
 	    </table>
 	</div>	

@@ -3,9 +3,11 @@
 	<h2>Tovar </h2>
 	<h3>Zoznam jedál</h3>
 
-	<a n:href="Goods:food">Pridať jedlo</a>
+	<a n:href="Goods:food" class="glyphicon glyphicon-plus" aria-hidden="true"></a>
+	<a n:href="Goods:food" >Pridať jedlo</a>
+	
 	<div class="food">
-	    <table border="1" style="width:50%">
+	    <table class="table table-hover">
   		<tr>
   			<th>ID</th>
     		<th>Nazáv</th>
@@ -29,10 +31,11 @@
 	</div>
 
 	<h3>Zoznam nápojov</h3>
-
+	<a n:href="Goods:drink" class="glyphicon glyphicon-plus" aria-hidden="true"></a>
 	<a n:href="Goods:drink">Pridať nápoj</a>
+	
 	<div class="drink">
-	    <table border="1" style="width:50%">
+	    <table class="table table-hover">
   		<tr>
   			<th>ID</th>
     		<th>Nazáv</th>

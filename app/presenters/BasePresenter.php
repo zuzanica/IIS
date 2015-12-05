@@ -35,7 +35,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	    $form->addSubmit('send', 'Přihlásit');
 
-	    $form->onSuccess[] = array($this, 'signInFormSucceeded');
+	    $form->onValidate[] = array($this, 'signInFormSucceeded');
 	    
         
         // setup form rendering
@@ -51,8 +51,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $form->getElementPrototype()->class('form-horizontal');
         foreach ($form->getControls() as $control) {
             if ($control instanceof Controls\Button) {
-                $control->getControlPrototype()->addClass(empty($usedPrimary) ? 'btn btn-primary' : 'btn btn-default');
-                $usedPrimary = TRUE;
+                $control->getControlPrototype()->addClass(empty($usedPrimary) ? 'btn btn-primary' : 'btn btn-primary');
+               // $usedPrimary = TRUE;
             } elseif ($control instanceof Controls\TextBase || $control instanceof Controls\SelectBox || $control instanceof Controls\MultiSelectBox) {
                 $control->getControlPrototype()->addClass('form-control');
             } elseif ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
@@ -69,10 +69,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	    try {
 	        $this->getUser()->login($values->username, $values->password);
-	        $this->getUser()->setExpiration(0, TRUE);
-	        $this->redirect('Homepage:');
-
+	        $this->getUser()->setExpiration('30 minutes', TRUE);
+	        $this->flashMessage('Boli ste úspešne prihlásený', 'success');
+            $this->redirect('Homepage:');
 	    } catch (Nette\Security\AuthenticationException $e) {
+            $this->flashMessage('Nesprávne meno alebo heslo.', 'failed');
 	        $form->addError('Nesprávne prihlasovacie meno alebo heslo.');
 	    }
 	}

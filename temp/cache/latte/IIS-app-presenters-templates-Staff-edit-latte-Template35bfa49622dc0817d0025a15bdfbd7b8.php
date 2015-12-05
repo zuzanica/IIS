@@ -12,11 +12,11 @@ list($_b, $_g, $_l) = $template->initialize('f66930591a', 'html')
 // block content
 //
 if (!function_exists($_b->blocks['content'][] = '_lb3783ae7152_content')) { function _lb3783ae7152_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
-?>	
-	<h2> Upraviť zamestnanca </h2>
+?>	<div class="center-form">
+		<h2> Upraviť zamestnanca </h2>
 
 <?php $_l->tmp = $_control->getComponent("staffForm"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
-	
+	</div>	
 	<a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Staff:"), ENT_COMPAT) ?>
 ">← Spať na zoznam zamestnancov</a>
 
