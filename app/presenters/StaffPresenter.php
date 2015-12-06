@@ -5,7 +5,8 @@ namespace App\Presenters;
 use Nette,
     Nette\Application\UI\Form,
     Nette\Mail\Message,
-    Nette\Mail\SendmailMailer;
+    Nette\Mail\SendmailMailer,
+    Nette\Security\Passwords;
 use App\Model;
 
 
@@ -33,14 +34,6 @@ class StaffPresenter extends BasePresenter
     {
         
         $this->template->staff = $this->database->table('staff');
-    }
-
-    public function renderShowpassw($user)
-    {
-        $this->template->users = $this->database->table('users');
-        $user= $this->database->table('users')->get($user);
-        $this->template->userID = $user->id;
-        $this->template->passw = $user->password; 
     }
 
 
@@ -133,7 +126,7 @@ class StaffPresenter extends BasePresenter
                 $person = $this->database->table('users')->insert(array(
                     'id_staff' => $person->id,
                     'login' => $person->login,
-                    'password' => $passw,
+                    'password' => md5($passw),
                     'role' => $person->position,
                 ));
                 $this->flashMessage('Užívateľ bol úspešne pridaný. Údaje Login: '. $person->login.' heslo: '. $passw . '.', 'success');
@@ -148,6 +141,81 @@ class StaffPresenter extends BasePresenter
         $this->redirect('Staff:');
     }
 
+        protected function createComponentChangePasswForm()
+    {
+        $form = new Nette\Application\UI\Form;
+
+        $form->addText('userId', '* Id:')
+            ->setType('number')
+            ->setRequired("Zadajte ID zamestnanca.");
+
+        $form->addPassword('newpassw', '* Nové heslo: ')
+            ->setRequired('Prosím vyplňte nové heslo.');
+
+        $form->addPassword('renewpassw', '* Potvrdenie hesla: ')
+            ->setRequired('Prosím potvrdte nové heslo.');
+
+        $form->addSubmit('send', 'Zmeniť');
+
+        $form->onSuccess[] = array($this, 'changePasswFormSucceeded');
+        
+        $renderer = $form->getRenderer();
+        $renderer->wrappers['controls']['container'] = NULL;
+        $renderer->wrappers['pair']['container'] = 'div class=form-group';
+        $renderer->wrappers['pair']['.error'] = 'has-error';
+        $renderer->wrappers['control']['container'] = 'div class=col-sm-7';
+        $renderer->wrappers['label']['container'] = 'div class="col-sm-5 control-label"';
+        $renderer->wrappers['control']['description'] = 'span class=help-block';
+        $renderer->wrappers['control']['errorcontainer'] = 'span class=help-block';
+        // make form and controls compatible with Twitter Bootstrap
+        $form->getElementPrototype()->class('form-horizontal');
+        foreach ($form->getControls() as $control) {
+            if ($control instanceof Controls\Button) {
+                $control->getControlPrototype()->addClass(empty($usedPrimary) ? 'btn btn-primary' : 'btn btn-primary');
+               // $usedPrimary = TRUE;
+            } elseif ($control instanceof Controls\TextBase || $control instanceof Controls\SelectBox || $control instanceof Controls\MultiSelectBox) {
+                $control->getControlPrototype()->addClass('form-control');
+            } elseif ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
+                $control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
+            }
+        }
+
+        return $form;
+    }
+
+    public function changePasswFormSucceeded($form)
+    {
+        $values = $form->values;
+
+        /*uzivalte nebol prihlázeny jak je mozne ze sa sem vobec dostal*/
+        if (!$this->getUser()->isInRole('admin')) {
+            $this->redirect('Homepage:');
+        }
+
+        $context = $this->database->table('users')->get($values->userId);
+
+        if(!$context){
+            $form->addError('Užívateľ nieje v databáze');
+        } else if($values->newpassw != $values->renewpassw){
+            $form->addError('Potvrdzujúce heslo sa nezhoduje s novým heslom.');
+        } else{
+            $context->update(array('password' => md5($values->newpassw)));
+            $this->flashMessage('Heslo bolo zmenené.', 'success');
+            $this->redirect('Staff:users');
+        }
+
+    }
+
+    public function actionChngpassw($userId)
+    {
+        if (!$this->getUser()->isInRole('admin')) {
+            $this->redirect('Homepage:');
+        }
+
+        $this['changePasswForm']['userId']->setDefaultValue($userId);
+    }
+
+
     public function actionEdit($personalId)
     {
         if (!$this->getUser()->isAllowed('editEmployee')) {
@@ -156,7 +224,7 @@ class StaffPresenter extends BasePresenter
 
         $person = $this->database->table('staff')->get($personalId);
         if (!$person) {
-            $this->error('Zamestnanec nieje v databáze');
+            $this->error('Zamestnanec nieje v databáze.');
         }
         $this['staffForm']->setDefaults($person->toArray());
     }

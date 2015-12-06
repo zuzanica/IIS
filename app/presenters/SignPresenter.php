@@ -93,7 +93,7 @@ class SignPresenter extends BasePresenter
 	 	} else if($values->newpassw != $values->renewpassw){
 	    	$form->addError('Potvrdzujúce heslo sa nezhoduje s novým heslom.');
 	    } else{
-	    	$context->update(array('password' => $values->newpassw));
+	    	$context->update(array('password' => md5($values->newpassw)));
 	    	$this->flashMessage('Heslo bolo zmenené.', 'success');
 	    }
 	}

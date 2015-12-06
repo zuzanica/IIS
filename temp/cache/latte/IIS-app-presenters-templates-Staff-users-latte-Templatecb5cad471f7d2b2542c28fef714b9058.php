@@ -31,8 +31,8 @@ if (!function_exists($_b->blocks['content'][] = '_lb63d3d6607b_content')) { func
 			        <td><?php echo Latte\Runtime\Filters::escapeHtml($user->id, ENT_NOQUOTES) ?></td> 
 			        <td><?php echo Latte\Runtime\Filters::escapeHtml($user->id_staff, ENT_NOQUOTES) ?></td>
 			        <td><?php echo Latte\Runtime\Filters::escapeHtml($user->login, ENT_NOQUOTES) ?></<td>
-			        <td><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("showpassw", array($user->id)), ENT_COMPAT) ?>
-">Zobraziť heslo</a></<td>
+			        <td><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Chngpassw", array($user->id)), ENT_COMPAT) ?>
+">Zmeniť heslo</a></<td>
 			        <td><?php echo Latte\Runtime\Filters::escapeHtml($user->role, ENT_NOQUOTES) ?></<td>
 		        </tr>
 		        

@@ -1,0 +1,7 @@
+{block content}
+
+	{if $user->isInRole('admin')}
+		{control changePasswForm}
+	{/if}
+
+{/block}
