@@ -67,8 +67,8 @@ class OrderPresenter extends BasePresenter
 
         $form = new Form;
         $form->addGroup('Stoly');   
-        $form->addSelect('table', 'Stôl:', $t)->setPrompt('Zvolte stôl')
-            ->setRequired();
+        $form->addSelect('table', '* Stôl:', $t)->setPrompt('Zvolte stôl')
+            ->setRequired("Musite zadať stôl objednávky");
 
         $form->addGroup('Jedlá  ');    
         foreach ($foods as $food) {
@@ -144,13 +144,19 @@ class OrderPresenter extends BasePresenter
                 $sum += $p[$key]->prize*$value;
             }   
         }
+
+        $logedUserID = $this->getUser()->getID(); 
+        //dump($this->database->table('users')->where('id', $logedUserID));
+        $logedUser = $this->database->table('users')->get($logedUserID);
+        //$this->flashMessage(print_r($logedUserID));
+
         //create payment into every order    
         $payment = $db->table('payment')->insert(array(
             'id' => null,
             'amount' => $sum,
             'date_time' => $now,  
             'state' => 'neuhradena',
-            'id_staff' => $this->getUser()->getID()
+            'id_staff' => $logedUser->id_staff
         ));    
 
         //echo $values['table'];
@@ -158,11 +164,9 @@ class OrderPresenter extends BasePresenter
             'id' => null,
             'id_reservation' => null,
             'id_table' => $values['table'],  
-            'id_staff' => $this->getUser()->getID(), 
+            'id_staff' => $logedUser->id_staff,
             'id_payment' => $payment->id
         ));
-
-
 
         foreach ($values as $key => $value){
             if(is_numeric($key) && $value > 0){
@@ -263,13 +267,14 @@ class OrderPresenter extends BasePresenter
             $this->redirect('Homepage:');
         }
         
+        $logedUser = $this->database->table('users')->get($this->getUser()->getID());
         $payed_order = $this->database->table('_order')->get($orderId);
         //$orderline= $context->table('_order')->get($orderId);
         $paymentId = $payed_order->payment->id;
 
         $payment = $this->database->table('payment')->get($paymentId)->update(array(
             'state' => "uhradená",  
-            'id_staff' => $this->getUser()->getID(), 
+            'id_staff' => $logedUser->id_staff, 
         ));
 
         /*$goods_orders = $this->database->query(

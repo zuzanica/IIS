@@ -3,8 +3,11 @@
 namespace App\Presenters;
 
 use Nette,
-    Nette\Application\UI\Form;
+    Nette\Application\UI\Form,
+    Nette\Mail\Message,
+    Nette\Mail\SendmailMailer;
 use App\Model;
+
 
 class StaffPresenter extends BasePresenter
 {
@@ -21,25 +24,25 @@ class StaffPresenter extends BasePresenter
         $this->template->staff = $this->database->table('staff');
     }
 
+    public function renderUsers()
+    {
+        $this->template->users = $this->database->table('users');
+    }
+
     public function renderDelete()
     {
         
         $this->template->staff = $this->database->table('staff');
     }
 
-    public function actionDelete($personalID)
+    public function renderShowpassw($user)
     {
-        $person = $this->database->table('staff')->get($personalID);
-        if (!$person) {
-            $this->error('Zamestnanec nieje v databáze');
-        }
-        else{
-            $this->database->table('staff')->where('id', $personalID)->delete();    
-        }
-        //add check window
-        $this->flashMessage('Zamestnanec bol odstránený', 'success');
-        $this->redirect('Staff:');
+        $this->template->users = $this->database->table('users');
+        $user= $this->database->table('users')->get($user);
+        $this->template->userID = $user->id;
+        $this->template->passw = $user->password; 
     }
+
 
     /**
      * Formular for adding new employees to database 
@@ -63,16 +66,16 @@ class StaffPresenter extends BasePresenter
 
         $form = new Form;
 
-        $form->addText('name', 'Meno:')
-            ->setRequired();
-        $form->addText('lastname', 'Priezvisko:')
-            ->setRequired(); 
-        $form->addText('login', 'Login:')
-            ->setRequired();
-        $form->addSelect('position', 'Pozícia:', $pos)->setPrompt('Zvolte pozíciu')
-            ->setRequired(); 
-        $form->addSelect('shift', 'Smena:', $sft)->setPrompt('Zvolte smenu')
-            ->setRequired(); 
+        $form->addText('name', '* Meno:')
+            ->setRequired("Zadajte meno zamestnanca.");
+        $form->addText('lastname', '* Priezvisko:')
+            ->setRequired("Zadajte priezvisko zamestnanca."); 
+        $form->addText('login', '* Login:')
+            ->setRequired("Zadajte login zamestnanca.");
+        $form->addSelect('position', '* Pozícia:', $pos)->setPrompt('Zvolte pozíciu')
+            ->setRequired("Zvolte pozíciu"); 
+        $form->addSelect('shift', '* Smena:', $sft)->setPrompt('Zvolte smenu')
+            ->setRequired("Zadajte pracovnu smenu."); 
                 
         $form->addSubmit('send', 'Uložit');
         $form->onSuccess[] = array($this, 'staffFormSucceeded');
@@ -119,9 +122,29 @@ class StaffPresenter extends BasePresenter
             'position' => $values->position, 
             'shift' => $values->shift,
         ));
+        
+            if( $values->position == 'admin'   ||
+                $values->position == 'manager' ||
+                $values->position == 'waiter' ) {
+
+                $passw = $this->getRandStr(5);
+                //$this->sendMail('zuzanica02@centrum.cz', 'xzuzka00', $passw);
+
+                $person = $this->database->table('users')->insert(array(
+                    'id_staff' => $person->id,
+                    'login' => $person->login,
+                    'password' => $passw,
+                    'role' => $person->position,
+                ));
+                $this->flashMessage('Užívateľ bol úspešne pridaný. Údaje Login: '. $person->login.' heslo: '. $passw . '.', 'success');
+            }
+            else{
+                $this->flashMessage('Užívateľ bol úspešne pridaný.', 'success');
+            }
+
         }
 
-        $this->flashMessage('Užívateľ bol úspešne pridaný.', 'success');
+        //$this->flashMessage('Užívateľ bol úspešne pridaný.', 'success');
         $this->redirect('Staff:');
     }
 
@@ -136,6 +159,69 @@ class StaffPresenter extends BasePresenter
             $this->error('Zamestnanec nieje v databáze');
         }
         $this['staffForm']->setDefaults($person->toArray());
+    }
+
+    public function actionDelete($personalID)
+    {
+        $person = $this->database->table('staff')->get($personalID);
+        if (!$person) {
+            $this->error('Zamestnanec nieje v databáze');
+        }
+        else{
+            //$removedPerson = $this->database->table('staff')->where('id', $personalID)->delete();
+            //check if it is necessare remove user account
+            if( $person->position == 'admin'   ||
+                $person->position == 'manager' ||
+                $person->position == 'waiter' ) {
+                $removedUser = $this->database->table('users')->where('id_staff', $personalID)->delete();
+            }            
+            
+            $logedUserID = $this->getUser()->getID(); 
+            $logedUser = $this->database->table('users')->get($logedUserID);
+            //update data in _order table
+            $updatedRows = $this->database->table('_order')
+                ->where('id_staff', $personalID)
+                ->update(array(
+                    'id_staff' => $logedUser->id_staff));
+            //update data in payment table        
+            $updatedRows = $this->database->table('payment')
+                ->where('id_staff', $personalID)
+                ->update(array(
+                    'id_staff' => $logedUser->id_staff));
+             
+            $person->delete();    
+        }
+        //add check window
+        $this->flashMessage('Zamestnanec bol odstránený', 'success');
+        $this->redirect('Staff:');
+    }
+
+    public function getRandStr($len){
+        $result = "";
+        $chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+        $charArray = str_split($chars);
+        
+        for($i = 0; $i < $len; $i++){
+            $randItem = array_rand($charArray);
+            $result .= "".$charArray[$randItem];
+        }
+        //dump($result);
+        return $result; 
+    }
+
+
+    public function sendMail($address, $login, $passw){
+        $mail = new Message;
+        $mail->setFrom('u3tecek@centrum.cz')
+            ->addTo($address)
+            ->setSubject('Vitajte U 3 ...')
+            ->setBody("Ahoj");
+        
+        //Dobrý den,\n Práve Vám bol vytvorený účet v našom informačnom systéme.\n Login: ".$login . "\n Heslo: ". $passw . "\n Po prvom prihlásení odporúčame zmeniť heslo.
+
+        $mailer = new SendmailMailer;
+        $mailer->send($mail);    
+
     }
   
 } 

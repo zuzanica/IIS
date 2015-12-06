@@ -15,7 +15,8 @@ if (!function_exists($_b->blocks['content'][] = '_lbf10723af09_content')) { func
 ?>	<div class=align-mid>
 
 		<div class="about">
-			<p>Toto je len nova stranka tu budu aktuality o restauracii</p>
+			<p>Vitajte na straánkach Restaurace u tří teček. Stránka bola vytvorená pre vzdelávacie účely. Jedná sa o fiktívnu reštauráciu.</p>
+			<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.</p> 
 		</div>
 
 	</div>	

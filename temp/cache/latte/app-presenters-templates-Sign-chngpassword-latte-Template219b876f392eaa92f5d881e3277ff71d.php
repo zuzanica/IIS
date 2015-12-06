@@ -14,8 +14,10 @@ list($_b, $_g, $_l) = $template->initialize('5f81bde333', 'html')
 if (!function_exists($_b->blocks['content'][] = '_lbc5fcd99c6d_content')) { function _lbc5fcd99c6d_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
 ?>	
 	<h2>Zmeniť heslo</h2>
-
-<?php $_l->tmp = $_control->getComponent("changePasswForm"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ;
+	<div class="center-form">
+<?php $_l->tmp = $_control->getComponent("changePasswForm"); if ($_l->tmp instanceof Nette\Application\UI\IRenderable) $_l->tmp->redrawControl(NULL, FALSE); $_l->tmp->render() ?>
+	</div>	
+<?php
 }}
 
 //

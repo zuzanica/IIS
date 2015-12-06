@@ -140,8 +140,7 @@ class ReservePresenter extends BasePresenter
 
             if($reserved)
             {
-                $this->flashMessage('CHYBAAA');
-                $form->addError('Lutujeme niekto si už rezervoval toto miesto zmente prosim čas alebo stôl.');
+                $form->addError('Ľutujeme niekto si už rezervoval toto miesto zmente prosím čas alebo stôl.');
             }        
             else
             {
@@ -167,7 +166,7 @@ class ReservePresenter extends BasePresenter
                 'id_client' => $client->id
             ));
 
-            $this->flashMessage('Ďakujeme za rezerváciu, bližšie informácie Vám boli zaslané na uvenú emailovú adresu.', 'success');
+            $this->flashMessage('Ďakujeme za rezerváciu.', 'success');
 
             $this->redirect('Reserve:');
 

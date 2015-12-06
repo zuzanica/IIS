@@ -25,8 +25,17 @@ class GoodsPresenter extends BasePresenter
 
     public function actionDeletefood($goodsID)
     {
+        //check if there is order on removed food  
+        $order = $this->database->table('goods_order')->where('id_goods', $goodsID);
+        //dump($order);
+        if(count($order) > 0){
+            $this->flashMessage('Ľutujeme na tento tovar je vytvorená objednávka, nemože byť odstránený');
+            $this->redirect('Goods:');
+        }
+
         $component = $this->database->table('goods')->get($goodsID);
         $food = $this->database->table('food')->where('id_goods', $goodsID);
+
         if (!$component or !$food) {
             $this->error('Jedlo nie je v databáze');
         }
@@ -42,6 +51,13 @@ class GoodsPresenter extends BasePresenter
 
     public function actionDeletedrink($goodsID)
     {
+        //check if there is order on removed food  
+        $order = $this->database->table('goods_order')->where('id_goods', $goodsID);
+        if(count($order) > 0){
+            $this->flashMessage('Ľutujeme na tento tovar je vytvorená objednávka, nemože byť odstránený');
+            $this->redirect('Goods:');
+        }
+
         $component = $this->database->table('goods')->get($goodsID);
         $drink = $this->database->table('drink')->where('id_goods', $goodsID);
         if (!$component or !$drink) {
@@ -72,13 +88,13 @@ class GoodsPresenter extends BasePresenter
 
         $form = new Form;
 
-        $form->addText('name', 'Názov:')
-            ->setRequired();
-        $form->addText('prize', 'Cena:')
-            ->setRequired();    
+        $form->addText('name', '* Názov:')
+            ->setRequired("Zadajte názov tovaru");
+        $form->addText('prize', '* Cena:')
+            ->setRequired("Zadajte cenu tovaru");    
         $form->addText('alergens', 'Alergény:');
         $form->addText('weigth', 'Hmotnosť:');
-        $form->addSelect('type', 'Typ:', $type)->setPrompt('Zvolte typ')
+        $form->addSelect('type', '* Typ:', $type)->setPrompt('Zvolte typ')
             ->setRequired();  
                 
         $form->addSubmit('send', 'Vložiť');
@@ -129,7 +145,7 @@ class GoodsPresenter extends BasePresenter
             'weigth' => $values->weigth
         ));
 
-        $this->flashMessage('Užívateľ bol úspešne pridaný.', 'success');
+        $this->flashMessage('Tovar bol úspešne pridaný.', 'success');
         $this->redirect('Goods:');
     }
 
@@ -139,10 +155,10 @@ class GoodsPresenter extends BasePresenter
 
         $form = new Form;
 
-        $form->addText('name', 'Názov:')
-            ->setRequired();
-        $form->addText('prize', 'Cena:')
-            ->setRequired();    
+        $form->addText('name', '* Názov:')
+            ->setRequired("Zadajte názov tovaru");
+        $form->addText('prize', '* Cena:')
+            ->setRequired("Zadajte cenu tovaru");    
         $form->addText('alergens', 'Alergény:');
         $form->addText('volume', 'Objem:');
 

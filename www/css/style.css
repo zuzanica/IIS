@@ -7,8 +7,11 @@ body {
 }
 
 h1{
-	color: #3484D2;
-	padding-left: 100px;
+	color: #2C4792;
+	padding-left: 35px;
+	font-family: 'Tangerine', serif;
+	font-size: 88px;
+	text-shadow: 4px 4px 4px #aaa;
 }
 
 #ajax-spinner {
@@ -100,8 +103,9 @@ a:hover{
 	text-decoration: none;
 }
 
-tr {
-	margin: 15px !important;
+.errors{
+	font-weight: bold;
+	color: red;
 }
 
 .about{
@@ -121,3 +125,6 @@ tr {
 	float:left;
 }
 
+p{
+	margin: 0 10 10 10px;
+}

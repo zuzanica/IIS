@@ -6,7 +6,6 @@ use Nette;
 use App\Model;
 
 
-
 /**
  * Base presenter for all application presenters.
  */

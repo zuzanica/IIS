@@ -37,18 +37,40 @@ class SignPresenter extends BasePresenter
 	protected function createComponentChangePasswForm()
 	{
 		$form = new Nette\Application\UI\Form;
-	    $form->addPassword('oldpassw', 'Súčasné heslo: *')
+	    $form->addPassword('oldpassw', '* Súčasné heslo: ')
 	        ->setRequired('Prosím zadajte súčasné heslo.');
 
-	    $form->addPassword('newpassw', 'Nové heslo:  *')
+	    $form->addPassword('newpassw', '* Nové heslo: ')
 	        ->setRequired('Prosím vyplňte nové heslo.');
 
-	    $form->addPassword('renewpassw', 'Potvrdenie hesla: *')
+	    $form->addPassword('renewpassw', '* Potvrdenie hesla: ')
 	    	->setRequired('Prosím potvrdte nové heslo.');
 
 	    $form->addSubmit('send', 'Zmeniť');
 
 	    $form->onSuccess[] = array($this, 'changePasswFormSucceeded');
+	    
+	    $renderer = $form->getRenderer();
+        $renderer->wrappers['controls']['container'] = NULL;
+        $renderer->wrappers['pair']['container'] = 'div class=form-group';
+        $renderer->wrappers['pair']['.error'] = 'has-error';
+        $renderer->wrappers['control']['container'] = 'div class=col-sm-7';
+        $renderer->wrappers['label']['container'] = 'div class="col-sm-5 control-label"';
+        $renderer->wrappers['control']['description'] = 'span class=help-block';
+        $renderer->wrappers['control']['errorcontainer'] = 'span class=help-block';
+        // make form and controls compatible with Twitter Bootstrap
+        $form->getElementPrototype()->class('form-horizontal');
+        foreach ($form->getControls() as $control) {
+            if ($control instanceof Controls\Button) {
+                $control->getControlPrototype()->addClass(empty($usedPrimary) ? 'btn btn-primary' : 'btn btn-primary');
+               // $usedPrimary = TRUE;
+            } elseif ($control instanceof Controls\TextBase || $control instanceof Controls\SelectBox || $control instanceof Controls\MultiSelectBox) {
+                $control->getControlPrototype()->addClass('form-control');
+            } elseif ($control instanceof Controls\Checkbox || $control instanceof Controls\CheckboxList || $control instanceof Controls\RadioList) {
+                $control->getSeparatorPrototype()->setName('div')->addClass($control->getControlPrototype()->type);
+            }
+        }
+
 	    return $form;
 	}
 

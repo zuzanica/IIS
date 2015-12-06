@@ -13,6 +13,12 @@ list($_b, $_g, $_l) = $template->initialize('b981506556', 'html')
 //
 if (!function_exists($_b->blocks['content'][] = '_lb2b9fe19434_content')) { function _lb2b9fe19434_content($_b, $_args) { foreach ($_args as $__k => $__v) $$__k = $__v
 ?>	
+<?php if ($user->isInRole('admin')) { ?>
+		<a class="right" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Staff:users"), ENT_COMPAT) ?>
+">Užívatelia v systéme</a>
+<?php } ?>
+
+
 	<h2> Zamestnanci </h2>
 
 	<a class="glyphicon glyphicon-plus" aria-hidden="true" href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Staff:new"), ENT_COMPAT) ?>

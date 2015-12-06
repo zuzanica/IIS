@@ -92,7 +92,7 @@ call_user_func(reset($_b->blocks['modal']), $_b, get_defined_vars())  ?>
 	<!--  BOOSTSTRAP -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
-
+	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
 	<link rel="stylesheet" type="text/css" href="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/css/style.css">
 	<link rel="shortcut icon" href="<?php echo Latte\Runtime\Filters::escapeHtml(Latte\Runtime\Filters::safeUrl($basePath), ENT_COMPAT) ?>/favicon.ico">
 	
@@ -147,7 +147,7 @@ call_user_func(reset($_b->blocks['modal']), $_b, get_defined_vars())  ?>
 
 	<div id=wrapper>
 		<div class="page-header">
-			<h1>Vitajte v reštaurácii u ...</h1>
+			<h1>Vitejte v restauraci u ...</h1>
 			<ul>
 <?php if ($user->loggedIn) { if ($user->isAllowed('Sales')) { ?>
 				       	<li class="navbar-text"><a href="<?php echo Latte\Runtime\Filters::escapeHtml($_control->link("Sales:"), ENT_COMPAT) ?>
