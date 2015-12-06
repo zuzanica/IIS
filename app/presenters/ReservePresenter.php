@@ -91,13 +91,14 @@ class ReservePresenter extends BasePresenter
 
         $form->addText('email', '* Email:')
             ->setType('email')
+            ->addRule(Form::EMAIL, 'Email musí byť zadaný v spávnom formáte')
             ->setRequired('Zadajte e-mail.');
    
         
         $form->addText('people', '* Počet osôb:')
             ->setType('number') 
             ->addRule(Form::INTEGER, 'Počet osôb musí být číslo')
-            ->addRule(Form::RANGE, 'Počet osôb musí byť vačsí ako jedna a menší ako 15. Pri vačsom počte ludí nás kontaktuje telefonicky alebo e-mailom', array(1, 15));
+            ->addRule(Form::RANGE, 'Počet osôb musí byť vačsí ako 1 a menší ako 15. Pri vačsom počte ludí nás kontaktuje telefonicky alebo e-mailom', array(1, 15));
         
 
         $form->addSelect('room', '* Miestnosť:', $rooms)->setPrompt('Zvolte miestnosť')
